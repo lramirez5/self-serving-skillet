@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "selfservingskillet6dcbb2d4": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
