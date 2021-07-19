@@ -1,0 +1,12 @@
+type Post @model 
+  @key(name: "postsByDate", fields: ["type", "createdAt"], queryField: "postsByDate")
+  @key(name: "categoryByDate", fields: ["category", "createdAt"], queryField: "categoryByDate") {
+  id: ID!
+  title: String!
+  type: String!
+  category: String
+  description: String
+  image: String
+  video: String
+  createdAt: String!
+}

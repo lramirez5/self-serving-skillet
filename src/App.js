@@ -1,16 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ListFoodRecipesComponent } from './components/ListFoodRecipesComponent';
+import { ListDrinkRecipesComponent } from './components/ListDrinkRecipesComponent';
+import { ListBlogPostsComponent } from './components/ListBlogPostsComponent';
+import { AdminPanelComponent } from './components/AdminPanelComponent';
+import { HomepageComponent } from './components/HomepageComponent'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>Hello from V2</h1>
-      </header>
-    </div>
-  );
+    return (
+        <div>
+            <Router>
+                <div className="container">
+                    <Switch>
+                        <Route path="/" exact>
+                          <HomepageComponent />
+                        </Route>
+                        <Route path="/recipes" exact>
+                          <ListFoodRecipesComponent />
+                        </Route>
+                        <Route path="/drinks" exact>
+                          <ListDrinkRecipesComponent />
+                        </Route>
+                        <Route path="/blog" exact>
+                          <ListBlogPostsComponent />
+                        </Route>
+                        <Route path="/admin" exact>
+                          <AdminPanelComponent />
+                        </Route>
+                    </Switch>
+                </div>
+            </Router>
+        </div>
+
+    );
 }
 
 export default App;
