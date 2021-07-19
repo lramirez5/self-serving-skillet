@@ -82,12 +82,17 @@ export function AdminPanelComponent() {
                         placeholder="Post description"
                         value={formData.description}
                     />
-                    <select onChange={e => setFormData({ ...formData, 'category': e.target.value })}>
+                    <select value={formData.category} onChange={e => setFormData({ ...formData, 'category': e.target.value })}>
                         <option value=""></option>
                         <option value="foodrecipe">Food</option>
                         <option value="drinkrecipe">Drink</option>
                         <option value="blogpost">Blog</option>
                     </select>
+                    <input
+                        onChange={e => setFormData({ ...formData, 'tags': e.target.value })}
+                        placeholder="Tags must be separated by commas"
+                        value={formData.tags}
+                    />
                     <button onClick={createPost}>Create Post</button>
                     <div style={{ marginBottom: 30 }}>
                         {

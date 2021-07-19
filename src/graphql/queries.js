@@ -11,6 +11,7 @@ export const getPost = /* GraphQL */ `
       description
       image
       video
+      tags
       createdAt
       updatedAt
     }
@@ -31,6 +32,7 @@ export const listPosts = /* GraphQL */ `
         description
         image
         video
+        tags
         createdAt
         updatedAt
       }
@@ -39,11 +41,11 @@ export const listPosts = /* GraphQL */ `
   }
 `;
 export const postsByDate = /* GraphQL */ `
-query PostsByDate {
-  postsByDate(
-    type: "post"
-    sortDirection: DESC
-  ) {
+  query PostsByDate {
+    postsByDate(
+      type: "post"
+      sortDirection: DESC
+    ) {
       items {
         id
         title
@@ -52,6 +54,7 @@ query PostsByDate {
         description
         image
         video
+        tags
         createdAt
         updatedAt
       }
@@ -82,6 +85,7 @@ export const categoryByDate = /* GraphQL */ `
         description
         image
         video
+        tags
         createdAt
         updatedAt
       }
@@ -89,70 +93,3 @@ export const categoryByDate = /* GraphQL */ `
     }
   }
 `;
-
-//export const postsByDate = /* GraphQL */ `
-/*  query PostsByDate(
-    $type: String
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    postsByDate(
-      type: "post"
-      createdAt: $createdAt
-      sortDirection: DESC
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        title
-        type
-        category
-        description
-        image
-        video
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-*/
-//export const categoryByDate = /* GraphQL */ `
-/*  query CategoryByDate(
-    $category: String
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    categoryByDate(
-      category: $category
-      createdAt: $createdAt
-      sortDirection: DESC
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        title
-        type
-        category
-        description
-        image
-        video
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-*/
