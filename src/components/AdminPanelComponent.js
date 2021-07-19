@@ -21,6 +21,8 @@ export function AdminPanelComponent() {
     async function fetchPosts() {
         const apiData = await API.graphql({ query: postsByDate });
         const postsFromAPI = apiData.data.postsByDate.items;
+        console.log("FETCHED:");
+        console.log(postsFromAPI);
         await Promise.all(postsFromAPI.map(async post => {
             if (post.image) {
                 const image = await Storage.get(post.image);

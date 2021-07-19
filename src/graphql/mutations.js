@@ -15,9 +15,6 @@ export const createPost = /* GraphQL */ `
       image
       video
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -36,9 +33,6 @@ export const updatePost = /* GraphQL */ `
       image
       video
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -57,9 +51,6 @@ export const deletePost = /* GraphQL */ `
       image
       video
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }

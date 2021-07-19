@@ -1,38 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const syncPosts = /* GraphQL */ `
-  query SyncPosts(
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncPosts(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        title
-        type
-        category
-        description
-        image
-        video
-        createdAt
-        _version
-        _deleted
-        _lastChangedAt
-        updatedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
 export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
@@ -44,9 +12,6 @@ export const getPost = /* GraphQL */ `
       image
       video
       createdAt
-      _version
-      _deleted
-      _lastChangedAt
       updatedAt
     }
   }
@@ -67,18 +32,66 @@ export const listPosts = /* GraphQL */ `
         image
         video
         createdAt
-        _version
-        _deleted
-        _lastChangedAt
         updatedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
 export const postsByDate = /* GraphQL */ `
-  query PostsByDate(
+query PostsByDate {
+  postsByDate(
+    type: "post"
+    sortDirection: DESC
+  ) {
+      items {
+        id
+        title
+        type
+        category
+        description
+        image
+        video
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const categoryByDate = /* GraphQL */ `
+  query CategoryByDate(
+    $category: String
+    $createdAt: ModelStringKeyConditionInput
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    categoryByDate(
+      category: $category
+      createdAt: $createdAt
+      sortDirection: DESC
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        type
+        category
+        description
+        image
+        video
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+
+//export const postsByDate = /* GraphQL */ `
+/*  query PostsByDate(
     $type: String
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
@@ -103,18 +116,15 @@ export const postsByDate = /* GraphQL */ `
         image
         video
         createdAt
-        _version
-        _deleted
-        _lastChangedAt
         updatedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
-export const categoryByDate = /* GraphQL */ `
-  query CategoryByDate(
+*/
+//export const categoryByDate = /* GraphQL */ `
+/*  query CategoryByDate(
     $category: String
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
@@ -139,13 +149,10 @@ export const categoryByDate = /* GraphQL */ `
         image
         video
         createdAt
-        _version
-        _deleted
-        _lastChangedAt
         updatedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
+*/
