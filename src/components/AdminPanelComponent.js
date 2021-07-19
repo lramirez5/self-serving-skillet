@@ -89,7 +89,7 @@ export function AdminPanelComponent() {
                         <option value="blogpost">Blog</option>
                     </select>
                     <input
-                        onChange={e => setFormData({ ...formData, 'tags': e.target.value })}
+                        onChange={e => setFormData({ ...formData, 'tags': e.target.value.split(",").map(item => item.trim()) })}
                         placeholder="Tags must be separated by commas"
                         value={formData.tags}
                     />

@@ -8,6 +8,6 @@ type Post @model
   description: String
   image: String
   video: String
-  tags: String
+  tags: [String]
   createdAt: String!
 }
