@@ -14,6 +14,7 @@ export function ListDrinkRecipesComponent() {
     async function fetchPosts() {
         const apiData = await API.graphql({ query: categoryByDate, variables: { category: "drinkrecipe" } });
         const postsFromAPI = apiData.data.categoryByDate.items;
+        console.log(postsFromAPI[0].image);
         await Promise.all(postsFromAPI.map(async post => {
             if (post.image) {
                 const image = await Storage.get(post.image);
@@ -32,16 +33,33 @@ export function ListDrinkRecipesComponent() {
                 {
                     posts.map(post => (
                         <div key={post.id || post.title}>
+                            <div>
+                                {
+                                    post.video &&
+                                    <iframe
+                                        src={`https://www.youtube.com/embed/${post.video}`}
+                                        title="YouTube video player"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen={true} webkitallowfullscreen="true" mozallowfullscreen="true" >
+                                    </iframe>
+                                }
+                            </div>
                             <h2>{post.title}</h2>
                             <p>{post.description}</p>
-                            {
-                                post.image && <img src={post.image} style={{ width: 400 }} alt="Just testing." />
-                            }
+                            <div>
+                                {
+                                    post.image && <img src={post.image} style={{ width: 400 }} alt="Just testing." />
+                                }
+                            </div>
+                            <div>
+                                <p>-----------------------------------------------------</p>
+                            </div>
                         </div>
                     ))
                 }
             </div>
-            
+
         </div>
     )
 
