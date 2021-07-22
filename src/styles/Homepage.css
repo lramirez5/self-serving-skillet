@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@600&display=swap');
+
+body {
+    text-align         : center;
+    background-image   : url(../images/background0.jpg);
+    background-position: top;
+    background-size    : 100vw;
+}
+
+#container {
+    width : 100%;
+    height: auto;
+    margin: auto;
+}
+
+#home-head {
+    background-image   : linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../images/sssknives.jpg);
+    background-position: center 30%;
+    background-repeat  : no-repeat;
+    background-size    : cover;
+    position           : relative;
+    height             : 40vh;
+    width              : 100%;
+    margin             : auto;
+}
+
+#home-head h1 {
+    text-align : center;
+    position   : absolute;
+    top        : 50%;
+    left       : 50%;
+    transform  : translate(-50%, -50%);
+    color      : white;
+    font-family: 'Signika', sans-serif;
+    font-size  : 3rem;
+}
+
+#home-menu {
+    z-index   : 1;
+    position  : sticky;
+    top       : 0;
+    text-align: center;
+    margin    : 0 auto 4vh;
+    height    : 9vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.88));
+}
+
+#home-menu #logo {
+    float       : left;
+    width       : 35vw;
+    height      : 100%;
+    padding-top : .5vh;
+    padding-left: .5vh;
+    text-align  : left;
+}
+
+#home-menu #logo img {
+    height: 90%;
+    border-radius: 100px;
+    box-shadow   : 0px 0px 16px white;
+}
+
+#menu-main {
+    height  : 100%;
+    position: relative;
+    left    : -17.5vw;
+}
+
+#home-menu button {
+    height     : 100%;
+    width      : 10%;
+    background : none;
+    border     : none;
+    font-family: 'Signika';
+    font-size  : 1em;
+    color      : rgb(214, 214, 214);
+}
+
+#home-menu button:hover {
+    border-left  : 1px solid black;
+    border-right : 1px solid black;
+    border-top   : 0;
+    border-bottom: 0;
+    border-style : inset;
+    background   : rgba(212, 212, 212, 0.2);
+}
+
+#home-menu #contact-btn {
+    float   : right;
+    position: relative;
+    top     : -100%;
+}
+
+#content {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius   : 30px;
+    width           : 88%;
+    padding         : 40px 0;
+    margin          : 0 auto 14vh;
+}
+
+
+
+#subcontent1 {
+    width         : 96%;
+    margin        : auto;
+    display       : flex;
+    flex-direction: row;
+    position      : relative;
+}
+
+#subcontent1 img {
+    flex-grow : 1;
+    padding   : 14px;
+    width: 33vw;
+    height    : 70vh;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+#food-panel {
+    position     : absolute;
+    bottom       : 20%;
+    right        : 55%;
+    font-family  : 'Signika';
+    color        : lemonchiffon;
+    background   : rgba(0, 0, 0, 0.75);
+    border-radius: 20px;
+    padding      : 24px;
+    text-align   : right;
+    width        : 20vw;
+}
+
+#drink-panel {
+    position     : absolute;
+    bottom       : 20%;
+    left         : 55%;
+    font-family  : 'Signika';
+    color        : lemonchiffon;
+    background   : rgba(0, 0, 0, 0.75);
+    border-radius: 20px;
+    padding      : 24px;
+    text-align   : left;
+    width        : 20vw;
+}
+
+#subcontent2 {
+    padding-top: 80px;
+    width      : 88%;
+    margin     : auto;
+}
+
+#subcontent2 img {
+    width          : 100%;
+    height         : 96vh;
+    object-fit     : cover;
+    object-position: 50% 86%;
+}
+
+#more-panels {
+    display       : flex;
+    flex-direction: row;
+    position      : relative;
+    top           : -96vh;
+}
+
+#more-panels div {
+    flex-grow    : 1;
+    width        : 28vw;
+    height       : 60vh;
+    background   : rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+    position     : absolute;
+    top          : 16vh;
+    font-family  : 'Signika';
+    color        : lemonchiffon;
+}
+
+#blog-panel {
+    right       : 50%;
+    margin-right: 6%;
+}
+
+#extras-panel {
+    left       : 50%;
+    margin-left: 6%;
+}
+
+#subcontent2 button {
+    position: relative;
+    top     : -50vh;
+}
+
+a {
+    color: lightgray;
+}
+
+.arrow {
+    border      : solid lightgray;
+    border-width: 0 2px 2px 0;
+    display     : inline-block;
+    padding     : 3px;
+}
+
+.right {
+    transform        : rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+@font-face {
+    font-family: headFont;
+    src        : url(https://fonts.googleapis.com/css2?family=Signika:wght@600&display=swap);
+}
