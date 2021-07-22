@@ -14,9 +14,15 @@ export function HomepageComponent() {
     }, []);
 
     function handleScroll() {
-        const el = document.getElementById("home-menu");
+        const el = document.getElementById("menu-title");
+        const menuOffset = document.getElementById("home-menu").offsetTop;
         let scroll = window.scrollY;
-        console.log(el.offsetTop);
+        if(scroll < 205) {
+            el.innerHTML = "";
+        } else {
+            el.innerHTML = "Self Serving Skillet";
+            el.style.opacity = `${(scroll-205)/(menuOffset-205)}`;
+        }
     }
 
     async function fetchImages() {
@@ -38,8 +44,8 @@ export function HomepageComponent() {
             <div id="home-menu">
                 <div id="logo">
                     <a href="https://www.youtube.com/channel/UCb8xPiMtYUox6rk4ONjSCdg" target="_blank" rel="noreferrer"><img src="https://yt3.ggpht.com/ytc/AAUvwngy3103R0HdhHNVoLjs9ecQwmBqPMQ7t1nF6LDA=s176-c-k-c0x00ffffff-no-rj" alt="Watch Self Serving Skillet on Youtube" /></a>
-                    <span id="menu-title">
-                    </span>
+                    <div id="menu-title">
+                    </div>
                 </div>
                 <div id="menu-main">
                     <button onClick={function () { document.location.href = document.location.href + "recipes" }}>Food</button>

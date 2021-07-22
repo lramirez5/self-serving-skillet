@@ -6,6 +6,7 @@ import { ListDrinkRecipesComponent } from './components/ListDrinkRecipesComponen
 import { ListBlogPostsComponent } from './components/ListBlogPostsComponent';
 import { AdminPanelComponent } from './components/AdminPanelComponent';
 import { HomepageComponent } from './components/HomepageComponent'
+import {Placeholder} from './components/Placeholder';
 
 function App() {
     return (
@@ -14,6 +15,9 @@ function App() {
                 <div className="container">
                     <Switch>
                         <Route path="/" exact>
+                          <Placeholder />
+                        </Route>
+                        <Route path="/temp" exact>
                           <HomepageComponent />
                         </Route>
                         <Route path="/recipes" exact>
