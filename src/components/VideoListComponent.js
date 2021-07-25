@@ -4,7 +4,8 @@ import '../styles/VideoList.css';
 export function VideoListComponent() {
 
   useEffect(() => {
-    var key = "AIzaSyDUcpZlGYn79iSYqs1NGH9P1p4NezGlEOU";
+    //console.log(process.env);
+    var key = process.env.YT_API_KEY;
     //var playlistId = "PLh-_qizMyR_UKUUUJsjKf_PSlW3APRagS";
     var playlistId = "UUb8xPiMtYUox6rk4ONjSCdg";
     var URL = "https://www.googleapis.com/youtube/v3/playlistItems?";
