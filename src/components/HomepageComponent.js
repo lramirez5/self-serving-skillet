@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Storage } from 'aws-amplify';
 import '../styles/Homepage.css';
 import board from '../images/sssboard.jpg';
+import { VideoListComponent } from './VideoListComponent';
 
 export function HomepageComponent() {
 
@@ -17,11 +18,11 @@ export function HomepageComponent() {
         const el = document.getElementById("menu-title");
         const menuOffset = document.getElementById("home-menu").offsetTop;
         let scroll = window.scrollY;
-        if(scroll < 205) {
+        if (scroll < 205) {
             el.innerHTML = "";
         } else {
             el.innerHTML = "Self Serving Skillet";
-            el.style.opacity = `${(scroll-205)/(menuOffset-205)}`;
+            el.style.opacity = `${(scroll - 205) / (menuOffset - 205)}`;
         }
     }
 
@@ -37,53 +38,58 @@ export function HomepageComponent() {
     }
 
     return (
-        <div id="container">
-            <div id="home-head">
-                <h1>Self Serving Skillet</h1>
-            </div>
-            <div id="home-menu">
-                <div id="logo">
-                    <a href="https://www.youtube.com/channel/UCb8xPiMtYUox6rk4ONjSCdg" target="_blank" rel="noreferrer"><img src="https://yt3.ggpht.com/ytc/AAUvwngy3103R0HdhHNVoLjs9ecQwmBqPMQ7t1nF6LDA=s176-c-k-c0x00ffffff-no-rj" alt="Watch Self Serving Skillet on Youtube" /></a>
-                    <div id="menu-title">
-                    </div>
+        <div>
+            <div id="container">
+                <div id="home-head">
+                    <h1>Self Serving Skillet</h1>
+                    <h4>Exploring the philosophy and technique of feeding yourself.</h4>
                 </div>
-                <div id="menu-main">
-                    <button onClick={function () { document.location.href = document.location.href + "recipes" }}>Food</button>
-                    <button onClick={function () { document.location.href = document.location.href + "drinks" }}>Drink</button>
-                    <button onClick={function () { document.location.href = document.location.href + "blog" }}>Blog</button>
-                </div>
-                <button id="contact-btn" onClick={function () { alert("Coming Soon") }}>Contact</button>
-            </div>
-            <div id="content">
-                <div id="subcontent1">
-                    <div id="food-panel">
-                        <h1>Food</h1>
-                        <p><a href={document.location.href + "recipes"} >Explore recipes <i className="arrow right"></i></a></p>
-                    </div>
-                    <img src={images[0]} alt="Tasty food." />
-                    <div id="drink-panel">
-                        <h1>Drink</h1>
-                        <p><a href={document.location.href + "drinks"}>Explore recipes <i className="arrow right"></i></a></p>
-                    </div>
-                    <img src={images[1]} alt="Delicious drink." />
-                </div>
-                <div id="subcontent2">
-                    <img src={board} alt="A cutting board." />
-                    <div id="more-panels">
-                        <div id="blog-panel">
-                            <h1>Blog</h1>
-                            <p><a href={document.location.href + "blog"}>See updates <i className="arrow right"></i></a></p>
-                        </div>
-                        <div id="extras-panel">
-                            <h1>Learn cooking techniques</h1>
-                            <p><a href="/">Coming soon <i className="arrow right"></i></a></p>
-                            <h1>See products I endorse</h1>
-                            <p><a href="/">Coming soon <i className="arrow right"></i></a></p>
+                <div id="home-menu">
+                    <div id="logo">
+                        <a href="https://www.youtube.com/channel/UCb8xPiMtYUox6rk4ONjSCdg" target="_blank" rel="noreferrer"><img src="https://yt3.ggpht.com/ytc/AAUvwngy3103R0HdhHNVoLjs9ecQwmBqPMQ7t1nF6LDA=s176-c-k-c0x00ffffff-no-rj" alt="Watch Self Serving Skillet on Youtube" /></a>
+                        <div id="menu-title">
                         </div>
                     </div>
+                    <div id="menu-main">
+                        <button onClick={function () { document.location.href = document.location.href + "recipes" }}>Food</button>
+                        <button onClick={function () { document.location.href = document.location.href + "drinks" }}>Drink</button>
+                        <button onClick={function () { document.location.href = document.location.href + "blog" }}>More</button>
+                    </div>
+                    <button id="contact-btn" onClick={function () { alert("Coming Soon") }}>Contact</button>
+                </div>
+                <div id="content">
+                    <div id="subcontent1">
+                        <div id="food-panel">
+                            <h1>Food</h1>
+                            <p>A good recipe should be only a snapshot of your journey.<br />Learn what you like. Make it your own. Improve with time.<br /><br />
+                                <a href={document.location.href + "recipes"} >Explore recipes <i className="arrow right"></i></a></p>
+                        </div>
+                        <img src={images[0]} alt="Tasty food." />
+                        <div id="drink-panel">
+                            <h1>Drink</h1>
+                            <p>Whether as simple as opening a bottle, or as complex as opening several, a well paired beverage will heighten any meal.<br /><br />
+                                <a href={document.location.href + "drinks"}>Explore recipes <i className="arrow right"></i></a></p>
+                        </div>
+                        <img src={images[1]} alt="Delicious drink." />
+                    </div>
+                    <div id="subcontent2">
+                        <img src={board} alt="A cutting board." />
+                        <div id="more-panels">
+                            <div id="blog-panel">
+                                <h1>Cooking Theory</h1>
+                                <p><a href={document.location.href + "blog"}>See updates <i className="arrow right"></i></a></p>
+                            </div>
+                            <div id="extras-panel">
+                                <h1>Technique Tuesdays</h1>
+                                <p><a href="/">Coming soon <i className="arrow right"></i></a></p>
+                                <h1>Kitchen Essentials for Every Skill Level</h1>
+                                <p><a href="/">Coming soon <i className="arrow right"></i></a></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
+            <VideoListComponent />
         </div>
     )
 }

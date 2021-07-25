@@ -7,6 +7,7 @@ import { ListBlogPostsComponent } from './components/ListBlogPostsComponent';
 import { AdminPanelComponent } from './components/AdminPanelComponent';
 import { HomepageComponent } from './components/HomepageComponent'
 import {Placeholder} from './components/Placeholder';
+import { VideoListComponent } from './components/VideoListComponent';
 
 function App() {
     return (
@@ -31,6 +32,9 @@ function App() {
                         </Route>
                         <Route path="/admin" exact>
                           <AdminPanelComponent />
+                        </Route>
+                        <Route path="/player" exact>
+                          <VideoListComponent />
                         </Route>
                     </Switch>
                 </div>

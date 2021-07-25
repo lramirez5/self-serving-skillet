@@ -1,0 +1,150 @@
+#yt-container {
+  width           : 90vw;
+  height          : 90vh;
+  margin          : 0 auto 20px;
+  background-color: rgba(255, 255, 255, 0.781);
+  border: 20px solid rgba(255, 255, 255, 0.781);
+  background-clip: padding-box;
+  border-radius: 14px;
+}
+
+#video {
+  float     : left;
+  text-align: center;
+  width     : 60%;
+  height    : 100%;
+  overflow-y: hidden;
+}
+
+#list {
+  float           : left;
+  width           : 40%;
+  height          : 100%;
+  overflow-y      : scroll;
+  overflow-x      : hidden;
+  text-align      : center;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+#player {
+  height: 30.375vw;
+}
+
+#desc {
+  text-align: left;
+  padding   : 20px;
+  height: 23%;
+  overflow: auto;
+}
+
+#desc h2 {
+  margin: 0;
+}
+
+#desc a {
+  color: #0067bb;
+}
+
+#vids {
+  height: auto;
+}
+
+iframe {
+  width : 100%;
+  height: 100%;
+}
+
+article {
+  display      : flex;
+  align-items  : center;
+  padding      : 4px 12px;
+  border       : 2px solid rgba(255, 255, 255, 0);
+  border-radius: 6px;
+  margin       : 0 auto;
+  height       : 10vh;
+  width        : 90%;
+  text-align   : left;
+}
+
+article:hover {
+  border: 2px solid #ff9999;
+  cursor: pointer;
+}
+
+.thumb {
+  height: 100%;
+  width : 25%;
+}
+
+.details {
+  text-align: left;
+  width     : 75%;
+  padding   : 8px 0 8px 8px;
+  overflow  : hidden;
+}
+
+.details h4 {
+  text-align: left;
+  margin    : 0 0 -16px;
+}
+
+#load {
+  border          : none;
+  width           : 30%;
+  padding         : 10px;
+  border-radius   : 16px;
+  color           : #fff;
+  background-color: #777;
+  margin          : 8px auto;
+}
+
+#load:hover {
+  background-color: #222;
+  color           : #fff;
+  box-shadow      : 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* width */
+#yt-container ::-webkit-scrollbar {
+  width: 12px;
+  background: white;
+}
+
+::-webkit-scrollbar-track {
+    
+  border: 0px;
+  box-shadow: 0px 0px 10px white;
+
+}
+
+/* Handle */
+#yt-container ::-webkit-scrollbar-thumb {
+  background   : #888;
+  border-radius: 6px;
+}
+
+/* Handle on hover */
+#yt-container ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@media screen and (max-width: 800px) {
+  #video, #list {
+    width: 100%;
+  }
+  #video {
+    overflow-y: visible;
+  }
+  #player {
+    height: 50.6vw;
+  }
+  #desc {
+    height: auto;
+  }
+  #yt-container {
+    height: 1000px;
+    display: flex;
+    flex-direction: column;
+  }
+
+}

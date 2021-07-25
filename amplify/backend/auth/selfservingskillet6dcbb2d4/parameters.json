@@ -1,6 +1,6 @@
 {
     "identityPoolName": "selfservingskillet6dcbb2d4_identitypool_6dcbb2d4",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "selfse6dcbb2d4",
     "userPoolName": "selfservingskillet6dcbb2d4_userpool_6dcbb2d4",
     "autoVerifiedAttributes": [
@@ -45,7 +45,7 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
+    "useDefault": "manual",
     "triggers": "{}",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
@@ -55,5 +55,10 @@
     },
     "breakCircularDependency": true,
     "permissions": [],
-    "dependsOn": []
+    "dependsOn": [],
+    "thirdPartyAuth": false,
+    "userPoolGroups": false,
+    "adminQueries": false,
+    "hostedUI": false,
+    "authProviders": []
 }
