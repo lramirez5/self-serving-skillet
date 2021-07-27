@@ -1,0 +1,27 @@
+#food-container {
+    background   : rgba(0, 0, 0, .4);
+    border-radius: 16px;
+    width        : 88vw;
+    height       : auto;
+    margin       : auto;
+}
+
+.post-preview {
+    padding      : 4px;
+    margin       : 4px;
+    width        : 45%;
+    display      : inline-block;
+    border-radius: 8px;
+    background   : rgba(0, 0, 0, .6);
+    color        : white;
+}
+
+.post-preview:hover {
+    cursor: pointer;
+}
+
+.preview-content {
+    padding    : 12px;
+    display    : flex;
+    align-items: center;
+}

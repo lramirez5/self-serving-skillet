@@ -9,7 +9,7 @@ export const onCreatePost = /* GraphQL */ `
       type
       category
       description
-      image
+      images
       video
       tags
       createdAt
@@ -25,7 +25,7 @@ export const onUpdatePost = /* GraphQL */ `
       type
       category
       description
-      image
+      images
       video
       tags
       createdAt
@@ -41,7 +41,7 @@ export const onDeletePost = /* GraphQL */ `
       type
       category
       description
-      image
+      images
       video
       tags
       createdAt

@@ -6,42 +6,44 @@ import { ListDrinkRecipesComponent } from './components/ListDrinkRecipesComponen
 import { ListBlogPostsComponent } from './components/ListBlogPostsComponent';
 import { AdminPanelComponent } from './components/AdminPanelComponent';
 import { HomepageComponent } from './components/HomepageComponent'
-import {Placeholder} from './components/Placeholder';
+import { Placeholder } from './components/Placeholder';
 import { VideoListComponent } from './components/VideoListComponent';
+import { PostComponent } from './components/PostComponent';
+import {Error} from './components/Error';
 
 function App() {
-    return (
-        <div>
-            <Router>
-                <div className="container">
-                    <Switch>
-                        <Route path="/" exact>
-                          <Placeholder />
-                        </Route>
-                        <Route path="/temp" exact>
-                          <HomepageComponent />
-                        </Route>
-                        <Route path="/recipes" exact>
-                          <ListFoodRecipesComponent />
-                        </Route>
-                        <Route path="/drinks" exact>
-                          <ListDrinkRecipesComponent />
-                        </Route>
-                        <Route path="/blog" exact>
-                          <ListBlogPostsComponent />
-                        </Route>
-                        <Route path="/admin" exact>
-                          <AdminPanelComponent />
-                        </Route>
-                        <Route path="/player" exact>
-                          <VideoListComponent />
-                        </Route>
-                    </Switch>
-                </div>
-            </Router>
-        </div>
+  return (
+    <Router>
+        <Switch>
+          <Route path="/" exact>
+            <Placeholder />
+          </Route>
+          <Route path="/temp" exact>
+            <HomepageComponent />
+          </Route>
+          <Route exact path="/recipes" >
+            <ListFoodRecipesComponent />
+          </Route>
+          <Route path="/recipes/:id">
+            <PostComponent />
+          </Route>
+          <Route path="/drinks" >
+            <ListDrinkRecipesComponent />
+          </Route>
+          <Route path="/blog" >
+            <ListBlogPostsComponent />
+          </Route>
+          <Route path="/admin" exact>
+            <AdminPanelComponent />
+          </Route>
+          <Route path="/player" exact>
+            <VideoListComponent />
+          </Route>
+          <Route component={Error} />
+        </Switch>
+    </Router>
 
-    );
+  );
 }
 
 export default App;

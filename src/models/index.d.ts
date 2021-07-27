@@ -14,8 +14,9 @@ export declare class Post {
   readonly type: string;
   readonly category?: string;
   readonly description?: string;
-  readonly image?: string;
+  readonly images?: (string | null)[];
   readonly video?: string;
+  readonly tags?: (string | null)[];
   readonly createdAt: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Post, PostMetaData>);

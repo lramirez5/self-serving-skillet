@@ -31,5 +31,12 @@
       "providerPlugin": "awscloudformation"
     }
   },
-  "function": {}
+  "function": {
+    "hellofunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
+    }
+  }
 }

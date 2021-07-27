@@ -4,6 +4,7 @@ import { Storage } from 'aws-amplify';
 import '../styles/Homepage.css';
 import board from '../images/sssboard.jpg';
 import { VideoListComponent } from './VideoListComponent';
+import { Link } from 'react-router-dom';
 
 export function HomepageComponent() {
 
@@ -51,22 +52,29 @@ export function HomepageComponent() {
                         </div>
                     </div>
                     <div id="menu-main">
-                        <button onClick={function () { document.location.href = document.location.href + "recipes" }}>Food</button>
-                        <button onClick={function () { document.location.href = document.location.href + "drinks" }}>Drink</button>
-                        <button onClick={function () { document.location.href = document.location.href + "blog" }}>More</button>
+                        <button className="std-btn" onClick={function () { document.location.href = document.location.href + "recipes" }}>Food</button>
+                        <button className="std-btn" onClick={function () { document.location.href = document.location.href + "drinks" }}>Drink</button>
+                        <div className="drop-btn" id="menu-more">
+                            <button id="more-btn" >More</button>
+                            <div id="menu-dropdown" class="dropdown-content">
+                                <Link to='/theory'>Cooking Theory</Link>
+                                <Link to='/essentials'>Kitchen Essentials</Link>
+                                <Link to='/techniques'>Technique Tues.</Link>
+                            </div>
+                        </div>
                     </div>
-                    <button id="contact-btn" onClick={function () { alert("Coming Soon") }}>Contact</button>
+                    <button className="std-btn" id="contact-btn" onClick={function () { alert("Coming Soon") }}>Contact</button>
                 </div>
                 <div id="content">
                     <div id="subcontent1">
                         <div id="food-panel">
-                            <h1>Food</h1>
+                            <h1>Food <i className="arrow down"></i></h1>
                             <p>A good recipe should be only a snapshot of your journey.<br />Learn what you like. Make it your own. Improve with time.<br /><br />
                                 <a href={document.location.href + "recipes"} >Explore recipes <i className="arrow right"></i></a></p>
                         </div>
                         <img src={images[0]} alt="Tasty food." />
                         <div id="drink-panel">
-                            <h1>Drink</h1>
+                            <h1><i className="arrow down"></i> Drink</h1>
                             <p>Whether as simple as opening a bottle, or as complex as opening several, a well paired beverage will heighten any meal.<br /><br />
                                 <a href={document.location.href + "drinks"}>Explore recipes <i className="arrow right"></i></a></p>
                         </div>

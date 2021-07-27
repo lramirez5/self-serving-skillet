@@ -6,6 +6,7 @@
   border: 20px solid rgba(255, 255, 255, 0.781);
   background-clip: padding-box;
   border-radius: 14px;
+  position: relative;
 }
 
 #video {
@@ -30,6 +31,10 @@
   height: 30.375vw;
 }
 
+#player-buffer {
+  display: none;
+}
+
 #desc {
   text-align: left;
   padding   : 20px;
@@ -49,12 +54,12 @@
   height: auto;
 }
 
-iframe {
+#video iframe {
   width : 100%;
   height: 100%;
 }
 
-article {
+#vids article {
   display      : flex;
   align-items  : center;
   padding      : 4px 12px;
@@ -66,7 +71,7 @@ article {
   text-align   : left;
 }
 
-article:hover {
+#vids article:hover {
   border: 2px solid #ff9999;
   cursor: pointer;
 }
@@ -129,6 +134,10 @@ article:hover {
 }
 
 @media screen and (max-width: 800px) {
+  #yt-container {
+    width: 100%;
+    border: 0;
+  }
   #video, #list {
     width: 100%;
   }
@@ -137,6 +146,16 @@ article:hover {
   }
   #player {
     height: 50.6vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: auto;
+    z-index: 10;
+  }
+  #player-buffer {
+    height: 50vw;
+    display: block;
   }
   #desc {
     height: auto;

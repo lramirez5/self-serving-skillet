@@ -9,7 +9,7 @@ export const getPost = /* GraphQL */ `
       type
       category
       description
-      image
+      images
       video
       tags
       createdAt
@@ -30,7 +30,7 @@ export const listPosts = /* GraphQL */ `
         type
         category
         description
-        image
+        images
         video
         tags
         createdAt
@@ -52,7 +52,7 @@ export const postsByDate = /* GraphQL */ `
         type
         category
         description
-        image
+        images
         video
         tags
         createdAt
@@ -83,7 +83,7 @@ export const categoryByDate = /* GraphQL */ `
         type
         category
         description
-        image
+        images
         video
         tags
         createdAt

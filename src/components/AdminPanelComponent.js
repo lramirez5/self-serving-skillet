@@ -7,7 +7,7 @@ import { HeaderComponent } from './HeaderComponent';
 import '../App.css'
 import '../styles/AdminPanel.css'
 
-const initialFormState = { title: '', description: '', type: 'post' }
+const initialFormState = { id: '', category: '', title: '', description: '', video: '', images: '', tags: '', type: 'post' }
 
 export function AdminPanelComponent() {
 
@@ -41,13 +41,18 @@ export function AdminPanelComponent() {
         const apiData = await API.graphql({ query: postsByDate });
         const postsFromAPI = apiData.data.postsByDate.items;
         await Promise.all(postsFromAPI.map(async post => {
-            if (post.image) {
-                const image = await Storage.get(post.image);
-                post.image = image;
+            if (post.images) {
+                for (let i = 0; i < post.images.length; i++) {
+                    const image = await Storage.get(post.images[i]);
+                    post.images[i] = image;
+                }
+                //const image = await Storage.get(post.image);
+                //post.image = image;
             }
             return post;
         }))
-        setPosts(apiData.data.postsByDate.items);
+        //console.log(postsFromAPI);
+        setPosts(postsFromAPI);
     }
 
     async function fetchImages() {
@@ -59,16 +64,20 @@ export function AdminPanelComponent() {
     async function createPost() {
         if (!formData.title || !formData.description) return;
         await API.graphql({ query: createPostMutation, variables: { input: formData } });
-        if (formData.image) {
-            const image = await Storage.get(formData.image);
-            formData.image = image;
+        if (formData.images) {
+            for (let i = 0; i < formData.images.length; i++) {
+                const image = await Storage.get(formData.images[i]);
+                formData.images[i] = image;
+            }
+            //const image = await Storage.get(formData.image);
+            //formData.image = image;
         }
         setPosts([formData, ...posts]);
         setFormData(initialFormState);
     }
 
     async function deletePost({ id }) {
-        console.log("Deleting id: " + id);
+        console.log("Deleting: " + id);
         const newPostsArray = posts.filter(post => post.id !== id);
         setPosts(newPostsArray);
         await API.graphql({ query: deletePostMutation, variables: { input: { id } } });
@@ -76,9 +85,20 @@ export function AdminPanelComponent() {
 
     async function postImgChange(e) {
         if (!e.target.files[0]) return
-        const file = e.target.files[0];
-        setFormData({ ...formData, image: file.name });
-        await Storage.put(file.name, file);
+        const files = e.target.files;
+        const filenames = [];
+        Array.prototype.forEach.call(files, async function(file) { 
+            filenames.push(file.name);
+            await Storage.put(file.name, file);
+         });
+        /*for (let i = 0; i < files.length; i++) {
+            filenames.push(files[i].name);
+            await Storage.put(files[i].name, files[i]);
+        }*/
+        console.log(filenames);
+        setFormData({ ...formData, images: filenames });
+        //setFormData({ ...formData, image: file.name });
+        //await Storage.put(file.name, file);
         fetchPosts();
     }
 
@@ -106,7 +126,7 @@ export function AdminPanelComponent() {
                             <ul className="flex-outer">
                                 <li className="postInput">
                                     <label>Select the category of your post: </label>
-                                    <select defaultValue="" value={formData.category} onChange={e => setFormData({ ...formData, 'category': e.target.value })}>
+                                    <select value={formData.category} onChange={e => setFormData({ ...formData, 'category': e.target.value })}>
                                         <option value="" disabled>Choose cateory</option>
                                         <option value="foodrecipe">Food Recipe</option>
                                         <option value="drinkrecipe">Drink Recipe</option>
@@ -119,7 +139,7 @@ export function AdminPanelComponent() {
                                 <li className="postInput">
                                     <label>Give your post a title: </label>
                                     <input
-                                        onChange={e => setFormData({ ...formData, 'title': e.target.value })}
+                                        onChange={e => setFormData({ ...formData, 'title': e.target.value, 'id': e.target.value.toLowerCase().replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '-') })}
                                         placeholder="Post title (required)"
                                         value={formData.title}
                                     />
@@ -128,7 +148,7 @@ export function AdminPanelComponent() {
                                     <label>Add a body/description to your post: </label>
                                     <textarea
                                         rows="6"
-                                        onChange={e => setFormData({ ...formData, 'description': e.target.value })}
+                                        onChange={e => setFormData({ ...formData, 'description': e.target.value.replace(/\n/g, '<br/>') })}
                                         placeholder="Post description (required)"
                                         value={formData.description}
                                     />
@@ -146,6 +166,7 @@ export function AdminPanelComponent() {
                                     <input
                                         type="file"
                                         accept="image/png, image/jpeg"
+                                        multiple={true}
                                         onChange={postImgChange}
                                     />
                                 </li>
@@ -209,7 +230,12 @@ export function AdminPanelComponent() {
                                             <p>{post.description}</p>
                                             <div>
                                                 {
-                                                    post.image && <img src={post.image} style={{ width: 400 }} alt="Just testing." />
+                                                    //post.images[0] && <img src={post.images[0]} style={{ width: 400 }} alt="Just testing." />
+                                                    post.images && post.images.map(image => (
+                                                        <div key={image.substring(50, 250)}>
+                                                            <img src={image} style={{ width: 400 }} alt="Just testing." />
+                                                        </div>
+                                                    ))
                                                 }
                                             </div>
                                             <button onClick={() => deletePost(post)}>Delete post</button>

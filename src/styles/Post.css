@@ -1,0 +1,13 @@
+.post {
+    width: 88vw;
+    text-align: center;
+    margin: auto;
+    background: rgba(0, 0, 0, .6);
+    border-radius: 16px;
+    font-family: 'Signika';
+    color      : rgb(240, 240, 240);
+}
+
+body {
+    overflow-y: scroll;
+}

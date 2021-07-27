@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "selfservingskillet6dcbb2d4": {}
+      },
+      "function": {
+        "hellofunction": {
+          "deploymentBucketName": "amplify-selfservingskillet-staging-175129-deployment",
+          "s3Key": "amplify-builds/hellofunction-427449766e6f51534e4f-build.zip"
+        }
       }
     }
   }

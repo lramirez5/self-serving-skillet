@@ -7,10 +7,11 @@ body {
 }
 
 #container {
-    text-align: center;
-    width     : 100%;
-    height    : auto;
-    margin    : auto;
+    text-align   : center;
+    width        : 100%;
+    height       : auto;
+    margin       : auto;
+    margin-bottom: -40px;
 }
 
 #home-head {
@@ -95,9 +96,31 @@ h4 {
     left    : -17.5vw;
 }
 
-#home-menu button {
-    height     : 100%;
-    width      : 10%;
+#home-menu #contact-btn {
+    float   : right;
+    position: relative;
+    top     : -100%;
+}
+
+#menu-more {
+    position: relative;
+    display : inline-block;
+}
+
+#more-btn {
+    width : 100%;
+    height: 100%;
+}
+
+#home-menu .std-btn,
+#home-menu .drop-btn {
+    height: 100%;
+    width : 10%;
+
+}
+
+#home-menu .std-btn,
+#more-btn {
     background : none;
     border     : none;
     font-family: 'Signika';
@@ -105,19 +128,54 @@ h4 {
     color      : rgb(214, 214, 214);
 }
 
-#home-menu button:hover {
+#home-menu .std-btn:hover {
     border-left  : 1px solid black;
     border-right : 1px solid black;
     border-top   : 0;
     border-bottom: 0;
     border-style : inset;
     background   : rgba(212, 212, 212, 0.4);
+    cursor: pointer;
 }
 
-#home-menu #contact-btn {
-    float   : right;
-    position: relative;
-    top     : -100%;
+#more-btn:hover,
+#more-btn:active {
+    border-left  : 1px solid black;
+    border-right : 1px solid black;
+    border-top   : 0;
+    border-bottom: 0;
+    border-style : inset;
+}
+
+#menu-more:hover {
+    background   : rgba(212, 212, 212, 0.4);
+}
+
+#menu-more:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content {
+    display         : none;
+    position        : absolute;
+    background-color: rgba(51, 50, 40, 0.95);
+    font-family     : 'Signika';
+    min-width       : 160px;
+    overflow        : auto;
+    box-shadow      : 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index         : 1;
+}
+
+.dropdown-content a {
+    color           : rgb(200, 200, 214);
+    padding        : 12px 16px;
+    text-decoration: none;
+    display        : block;
+}
+
+.dropdown-content a:hover {
+    background: rgba(212, 212, 212, 0.5);
+    color           : rgb(20, 20, 65);
 }
 
 #content {
@@ -150,11 +208,23 @@ h4 {
 }
 
 #subcontent1 h1 {
-    margin: 0 auto 10px;
+    margin         : 0 auto 10px;
+    text-decoration: underline;
 }
 
 #subcontent1 p {
-    font-size: 12pt;
+    font-size : 12pt;
+    margin    : 0;
+    transition: opacity 0s, width .8s;
+    opacity   : 0;
+    height    : 0;
+    width     : 0;
+    overflow  : hidden;
+}
+
+#subcontent1 a {
+    color    : #bb9f00;
+    font-size: 14pt;
 }
 
 #food-panel {
@@ -206,7 +276,7 @@ h4 {
 
 #more-panels div {
     flex-grow    : 1;
-    width        : 28vw;
+    width        : 35vw;
     height       : 60vh;
     background   : rgba(0, 0, 0, 0.7);
     border-radius: 20px;
@@ -218,12 +288,12 @@ h4 {
 
 #blog-panel {
     right       : 50%;
-    margin-right: 6%;
+    margin-right: 2%;
 }
 
 #extras-panel {
     left       : 50%;
-    margin-left: 6%;
+    margin-left: 2%;
 }
 
 #subcontent2 button {
@@ -247,6 +317,14 @@ a {
     -webkit-transform: rotate(-45deg);
 }
 
+.down {
+    border-width     : 0 5px 5px 0;
+    padding          : 4px;
+    margin-bottom    : 4px;
+    transform        : rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
 #bottom-container {
     width           : 100vw;
     background-color: #eee;
@@ -258,24 +336,88 @@ a {
     src        : url(https://fonts.googleapis.com/css2?family=Signika:wght@600&display=swap);
 }
 
-::-webkit-scrollbar {
-    width: 30px;
+.null ::-webkit-scrollbar {
+    width           : 30px;
     background-image: url(../images/background0.jpg);
 }
 
-::-webkit-scrollbar-track {
-    
-    border: 1px solid grey;
+.null ::-webkit-scrollbar-track {
+
+    border       : 1px solid grey;
     border-radius: 12px;
-    box-shadow: 0px 0px 10px white;
+    box-shadow   : 0px 0px 10px white;
 
 }
 
-::-webkit-scrollbar-thumb {
+.null ::-webkit-scrollbar-thumb {
     background-image: url(../images/bacon.png);
-    background-size : 30px 100%;
+    background-size : 30px 50%;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.null ::-webkit-scrollbar-thumb:hover {
     background-image: url(../images/hotbacon.png);
+}
+
+@media screen and (max-width: 800px) {
+    #content {
+        width: 100%;
+    }
+
+    #subcontent1 p {
+        opacity      : 1;
+        height       : 18vh;
+        width        : 30vw;
+        padding-right: 10px;
+    }
+
+    #home-menu .std-btn,
+    #more-btn {
+        font-size: 2.2vw;
+    }
+
+}
+
+@media screen and (min-width: 800px) {
+    #food-panel:hover p {
+        opacity      : 1;
+        height       : 12vh;
+        width        : 30vw;
+        margin-bottom: 20px;
+        padding-right: 10px;
+        transition   : opacity 1.6s ease-in, width .25s;
+    }
+
+    #food-panel:hover {
+        bottom: 4vh;
+    }
+
+    #food-panel:hover h1 {
+        text-decoration: none;
+    }
+
+    #food-panel:hover .down {
+        transform        : rotate(135deg);
+        -webkit-transform: rotate(135deg);
+    }
+
+    #drink-panel:hover p {
+        opacity      : 1;
+        height       : 12vh;
+        width        : 30vw;
+        margin-bottom: 20px;
+        transition   : opacity 1.6s ease-in, width .25s;
+    }
+
+    #drink-panel:hover {
+        bottom: 4vh;
+    }
+
+    #drink-panel:hover h1 {
+        text-decoration: none;
+    }
+
+    #drink-panel:hover .down {
+        transform        : rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+    }
 }
