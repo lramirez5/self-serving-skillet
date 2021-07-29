@@ -1,4 +1,5 @@
-import '../styles/Navbar.css'
+import { Link } from 'react-router-dom';
+import '../styles/Navbar.css';
 
 export function NavbarComponent() {
     return (
@@ -9,11 +10,19 @@ export function NavbarComponent() {
                     <div id="nav-title">Self Serving Skillet</div>
                 </div>
                 <div id="nav-main">
-                    <button onClick={function () { document.location.href = document.location.href + "recipes" }}>Food</button>
-                    <button onClick={function () { document.location.href = document.location.href + "drinks" }}>Drink</button>
-                    <button onClick={function () { document.location.href = document.location.href + "blog" }}>More</button>
+                    <button className="nav-std-btn"><Link to='/'>Home</Link></button>
+                    <button className="nav-std-btn"><Link to='/recipes'>Food</Link></button>
+                    <button className="nav-std-btn"><Link to='/drinks'>Drink</Link></button>
+                    <div className="nav-drop-btn" id="nav-menu-more">
+                        <button id="nav-more-btn" >More</button>
+                        <div id="nav-dropdown" className="nav-dropdown-content">
+                            <Link to='/theory'>Cooking Theory</Link>
+                            <Link to='/essentials'>Kitchen Essentials</Link>
+                            <Link to='/techniques'>Technique Tues.</Link>
+                        </div>
+                    </div>
+                    <button className="nav-std-btn" id="nav-contact-btn" onClick={function () { alert("Coming Soon") }}>Contact</button>
                 </div>
-                <button id="nav-contact-btn" onClick={function () { alert("Coming Soon") }}>Contact</button>
             </div>
             <div id="nav-buffer"></div>
         </div>

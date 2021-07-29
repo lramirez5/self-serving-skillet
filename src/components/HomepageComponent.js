@@ -5,27 +5,16 @@ import '../styles/Homepage.css';
 import board from '../images/sssboard.jpg';
 import { VideoListComponent } from './VideoListComponent';
 import { Link } from 'react-router-dom';
+import { handleHomepageScroll } from '../scripts/handleHomepageScroll';
 
 export function HomepageComponent() {
 
     const [images, setImages] = useState([]);
 
     useEffect(() => {
-        window.addEventListener('scroll', () => handleScroll());
+        window.addEventListener('scroll', handleHomepageScroll);
         fetchImages();
     }, []);
-
-    function handleScroll() {
-        const el = document.getElementById("menu-title");
-        const menuOffset = document.getElementById("home-menu").offsetTop;
-        let scroll = window.scrollY;
-        if (scroll < 205) {
-            el.innerHTML = "";
-        } else {
-            el.innerHTML = "Self Serving Skillet";
-            el.style.opacity = `${(scroll - 205) / (menuOffset - 205)}`;
-        }
-    }
 
     async function fetchImages() {
         const image1 = await Storage.get('homepage0.jpg')
@@ -52,11 +41,11 @@ export function HomepageComponent() {
                         </div>
                     </div>
                     <div id="menu-main">
-                        <button className="std-btn" onClick={function () { document.location.href = document.location.href + "recipes" }}>Food</button>
-                        <button className="std-btn" onClick={function () { document.location.href = document.location.href + "drinks" }}>Drink</button>
+                        <button className="std-btn"><Link to='/recipes'>Food</Link></button>
+                        <button className="std-btn"><Link to='/drinks'>Drink</Link></button>
                         <div className="drop-btn" id="menu-more">
                             <button id="more-btn" >More</button>
-                            <div id="menu-dropdown" class="dropdown-content">
+                            <div id="menu-dropdown" className="dropdown-content">
                                 <Link to='/theory'>Cooking Theory</Link>
                                 <Link to='/essentials'>Kitchen Essentials</Link>
                                 <Link to='/techniques'>Technique Tues.</Link>
@@ -68,16 +57,17 @@ export function HomepageComponent() {
                 <div id="content">
                     <div id="subcontent1">
                         <div id="food-panel">
-                            <h1>Food <i className="arrow down"></i></h1>
-                            <p>A good recipe should be only a snapshot of your journey.<br />Learn what you like. Make it your own. Improve with time.<br /><br />
-                                <a href={document.location.href + "recipes"} >Explore recipes <i className="arrow right"></i></a></p>
+                            <h1><i className="arrow right-down"></i>Food</h1>
+                            <p>A good recipe should be only a snapshot of your journey.</p>
+                            <p>Learn what you like. Make it your own. Improve with time.<br /><br /></p>
+                            <p><Link to="/recipes">Explore recipes <i className="arrow right"></i></Link></p>
+                        </div>
+                        <div id="drink-panel">
+                            <h1>Drink<i className="arrow left-down"></i></h1>
+                            <p>Whether as simple as opening a bottle, or as complex as opening several, a well paired beverage will heighten any meal.<br /><br /></p>
+                            <p><Link to="/drinks">Explore recipes <i className="arrow right"></i></Link></p>
                         </div>
                         <img src={images[0]} alt="Tasty food." />
-                        <div id="drink-panel">
-                            <h1><i className="arrow down"></i> Drink</h1>
-                            <p>Whether as simple as opening a bottle, or as complex as opening several, a well paired beverage will heighten any meal.<br /><br />
-                                <a href={document.location.href + "drinks"}>Explore recipes <i className="arrow right"></i></a></p>
-                        </div>
                         <img src={images[1]} alt="Delicious drink." />
                     </div>
                     <div id="subcontent2">
@@ -85,13 +75,13 @@ export function HomepageComponent() {
                         <div id="more-panels">
                             <div id="blog-panel">
                                 <h1>Cooking Theory</h1>
-                                <p><a href={document.location.href + "blog"}>See updates <i className="arrow right"></i></a></p>
+                                <p><Link to='/theory'>See updates <i className="arrow right"></i></Link></p>
                             </div>
                             <div id="extras-panel">
                                 <h1>Technique Tuesdays</h1>
-                                <p><a href="/">Coming soon <i className="arrow right"></i></a></p>
+                                <p><Link to='/essentials'>Coming soon <i className="arrow right"></i></Link></p>
                                 <h1>Kitchen Essentials for Every Skill Level</h1>
-                                <p><a href="/">Coming soon <i className="arrow right"></i></a></p>
+                                <p><Link to='/techniques'>Coming soon <i className="arrow right"></i></Link></p>
                             </div>
                         </div>
                     </div>

@@ -81,9 +81,9 @@ export function VideoListComponent() {
           }
 
           document.getElementById("vids").innerHTML += `
-        <article class="item" data-key="${vid}" data-title="${title}" data-desc="${desc}">
-          <img src="${thumb}" alt="" class="thumb">
-          <div class="details">
+        <article className="item" data-key="${vid}" data-title="${title}" data-desc="${desc}">
+          <img src="${thumb}" alt="" className="thumb">
+          <div className="details">
             <h4>${titlePieces[0]}</h4>
             <p>${displayDesc}...</p>
           </div>

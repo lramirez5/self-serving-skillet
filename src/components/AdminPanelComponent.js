@@ -42,7 +42,7 @@ export function AdminPanelComponent() {
         const apiData = await API.graphql({ query: postsByDate });
         const postsFromAPI = apiData.data.postsByDate.items;
         await Promise.all(postsFromAPI.map(async post => {
-            if (post.images) {
+            if (post.images[0] !== '') {
                 for (let i = 0; i < post.images.length; i++) {
                     const image = await Storage.get(post.images[i]);
                     post.images[i] = image;
@@ -65,7 +65,7 @@ export function AdminPanelComponent() {
     async function createPost() {
         if (!formData.title || !formData.description) return;
         await API.graphql({ query: createPostMutation, variables: { input: formData } });
-        if (formData.images) {
+        if (formData.images !== '') {
             for (let i = 0; i < formData.images.length; i++) {
                 const image = await Storage.get(formData.images[i]);
                 formData.images[i] = image;
@@ -80,7 +80,7 @@ export function AdminPanelComponent() {
     async function updatePost() {
         if (!updateData.title || !updateData.description) return;
         await API.graphql({ query: updatePostMutation, variables: { input: updateData } });
-        if (updateData.images) {
+        if (updateData.images !== '') {
             for (let i = 0; i < updateData.images.length; i++) {
                 const image = await Storage.get(updateData.images[i]);
                 updateData.images[i] = image;
@@ -113,7 +113,7 @@ export function AdminPanelComponent() {
             filenames.push(files[i].name);
             await Storage.put(files[i].name, files[i]);
         }*/
-        console.log(filenames);
+        //console.log(filenames);
         setFormData({ ...formData, images: filenames });
         //setFormData({ ...formData, image: file.name });
         //await Storage.put(file.name, file);
@@ -132,9 +132,9 @@ export function AdminPanelComponent() {
             filenames.push(files[i].name);
             await Storage.put(files[i].name, files[i]);
         }*/
-        console.log(filenames);
+        //console.log([...updateData.images, ...filenames]);
         if (updateData.images) {
-            setUpdateData({ ...updateData, 'images': [...updateData.images, filenames] });
+            setUpdateData({ ...updateData, 'images': [...updateData.images, ...filenames] });
         } else {
             setUpdateData({ ...updateData, 'images': filenames });
         }
@@ -196,6 +196,7 @@ export function AdminPanelComponent() {
 
     function removeImage(e) {
         if (e.target.src) {
+            if (e.target.style.opacity === '0') return;
             let img = JSON.stringify(e.target.src).split('public/')[1].split('?')[0];
 
             if (window.confirm(`Remove ${img} from this post?`)) {
@@ -209,7 +210,9 @@ export function AdminPanelComponent() {
                         names.splice(index, 1);
                         //console.log(names);
                         setUpdateData({ ...updateData, 'images': names });
-                        console.log(updateData.images);
+                        e.target.style.opacity = "0";
+                        //e.target.style.border =  "1px solid red"
+                        //console.log(updateData.images);
                     }
                 }
             }
@@ -266,7 +269,7 @@ export function AdminPanelComponent() {
                                         />
                                     </li>
                                     <li className="postInput">
-                                        <label>Add image(s): <p style={{ color: 'orange', fontSize: '12px' }}>Warning: Uploading any new images will overwrite all old images</p></label>
+                                        <label>Add image(s): </label>
                                         <input
                                             type="file"
                                             accept="image/png, image/jpeg"
@@ -382,11 +385,13 @@ export function AdminPanelComponent() {
 
                     <button className="accordion">My Posts</button>
                     <div className="panel">
-                        <div className="PostViewer">
+                        <div className="PostViewer" >
                             <div style={{ marginBottom: 30 }}>
                                 {
                                     posts.map(post => (
-                                        <div key={post.id || post.title}>
+                                        <div key={post.id || post.title} style={{ borderBottom: '2px solid black', padding: '24px' }}>
+                                            <h2>{post.title}</h2>
+                                            <p>{post.description}</p>
                                             <div>
                                                 {
                                                     post.video &&
@@ -398,24 +403,15 @@ export function AdminPanelComponent() {
                                                         allowFullScreen={true} webkitallowfullscreen="true" mozallowfullscreen="true" >
                                                     </iframe>
                                                 }
-                                            </div>
-                                            <h2>{post.title}</h2>
-                                            <p>{post.description}</p>
-                                            <div>
                                                 {
                                                     //post.images[0] && <img src={post.images[0]} style={{ width: 400 }} alt="Just testing." />
-                                                    post.images && post.images.map(image => (
-                                                        <div key={image.substring(50, 250)}>
-                                                            <img src={image} style={{ width: 400 }} alt="Just testing." />
-                                                        </div>
+                                                    post.images && post.images[0] && post.images.map(image => (
+                                                        <img key={image.substring(50, 250)} src={image} style={{ width: 120 }} alt="Just testing." />
                                                     ))
                                                 }
                                             </div>
                                             <button onClick={() => deletePost(post)}>Delete post</button>
                                             <button onClick={() => showUpdatePost(post)}>Update post</button>
-                                            <div>
-                                                <p>-----------------------------------------------------</p>
-                                            </div>
                                         </div>
                                     ))
                                 }
@@ -436,4 +432,3 @@ export function AdminPanelComponent() {
     )
 
 }
-
