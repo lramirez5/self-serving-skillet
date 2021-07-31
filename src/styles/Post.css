@@ -1,13 +1,210 @@
 .post {
-    width: 88vw;
-    text-align: center;
-    margin: auto;
+    width        : 88vw;
+    text-align   : center;
+    margin       : auto;
+    background   : rgba(0, 0, 0, .6);
+    border-radius: 6px;
+    font-family  : 'Signika';
+    color        : rgb(240, 240, 240);
+}
+
+.post h1{
+    color: lemonchiffon;
     background: rgba(0, 0, 0, .6);
-    border-radius: 16px;
-    font-family: 'Signika';
-    color      : rgb(240, 240, 240);
+    border-radius: 12px;
+    width: 50%;
+    margin: 10px auto;
+    padding: 12px;
+}
+
+#post-desc {
+    text-align: left;
+    padding: 28px 60px;
+    background: rgba(0, 0, 0, .6);
 }
 
 body {
     overflow-y: scroll;
+}
+
+#carousel {
+    height  : 60vh;
+    width   : 100%;
+    padding : 0;
+    margin  : 0;
+    position: relative;
+    overflow: hidden;
+}
+
+#carousel iframe {
+    position : absolute;
+    height   : 60vh;
+    padding  : 0;
+    margin   : 0;
+    transform: translateX(-50%);
+}
+
+#carousel img {
+    position : absolute;
+    height   : 60vh;
+    width    : auto;
+    padding  : 0;
+    margin   : 0;
+    transform: translateX(-50%);
+}
+
+#carousel .centered {
+    left      : 50%;
+    z-index   : 3;
+    box-shadow: 0px 0px 20px black;
+    display   : block;
+    transition: left 1s;
+}
+
+#carousel .left1 {
+    left   : 25%;
+    top    : 6vh;
+    z-index: 2;
+    height : 48vh;
+    filter : brightness(.9);
+
+    display   : block;
+    transition: height 1s, top 1s, left 1s;
+}
+
+#carousel .right1 {
+    left   : 75%;
+    top    : 6vh;
+    z-index: 2;
+    height : 48vh;
+    filter : brightness(.9);
+
+    display   : block;
+    transition: height 1s, top 1s, left 1s;
+}
+
+#carousel .left2 {
+    left   : 15%;
+    top    : 15vh;
+    z-index: 1;
+    height : 30vh;
+    filter : brightness(.8);
+
+    display   : block;
+    transition: height 1s, top 1s, left 1s;
+}
+
+#carousel .right2 {
+    left   : 85%;
+    top    : 15vh;
+    z-index: 1;
+    height : 30vh;
+    filter : brightness(.8);
+
+    display   : block;
+    transition: height 1s, top 1s, left 1s;
+}
+
+#carousel .left3 {
+    left   : 15%;
+    top    : 30vh;
+    z-index: 0;
+    height : 0vh;
+    filter : brightness(.5);
+
+    display   : block;
+    transition: height .2s, top 1s, left 1s;
+}
+
+#carousel .right3 {
+    left   : 85%;
+    top    : 30vh;
+    z-index: 0;
+    height : 0vh;
+    filter : brightness(.5);
+
+    display   : block;
+    transition: height .2s, top 1s, left 1s;
+}
+
+
+#carousel iframe.centered {
+    width: 106vh;
+}
+
+#carousel iframe.left1,
+#carousel iframe.right1 {
+    width: 85vh;
+}
+
+#carousel iframe.left2,
+#carousel iframe.right2 {
+    width: 53vh;
+}
+
+#left-shadow {
+    position  : absolute;
+    top       : 0;
+    left      : 0;
+    z-index   : 2;
+    height    : 100%;
+    width     : 30%;
+    background: linear-gradient(.25turn, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+
+}
+
+#right-shadow {
+    position  : absolute;
+    top       : 0;
+    right     : 0;
+    z-index   : 2;
+    height    : 100%;
+    width     : 30%;
+    background: linear-gradient(.75turn, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+}
+
+.dot {
+    cursor          : pointer;
+    height          : 15px;
+    width           : 15px;
+    margin          : 0 3px;
+    background-color: #bbb;
+    border-radius   : 50%;
+    display         : inline-block;
+    transition      : background-color 0.6s ease;
+}
+
+.dot-active,
+.dot:hover {
+    background-color: #717171;
+}
+
+.dot-arrow-left {
+    cursor       : pointer;
+    display      : inline-block;
+    width        : 0;
+    height       : 0;
+    margin       : 0 3px;
+    border-top   : 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right : 12px solid #bbb;
+}
+
+.dot-arrow-right {
+    cursor       : pointer;
+    display      : inline-block;
+    width        : 0;
+    height       : 0;
+    margin       : 0 3px;
+    border-top   : 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left  : 12px solid #bbb;
+}
+
+.dot-arrow-left:hover {
+    border-right: 12px solid #717171;
+}
+
+.dot-arrow-right:hover {
+    border-left: 12px solid #717171;
 }
