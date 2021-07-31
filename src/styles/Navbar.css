@@ -31,8 +31,13 @@
     width        : 8vh;
     margin-top   : .5vh;
     margin-left  : .5vh;
+    margin-right: 1vh;
     border-radius: 100px;
-    box-shadow   : 0px 0px 16px white;
+    box-shadow   : 0px 0px 8px #cccccc;
+}
+
+#nav-menu #nav-logo img:hover {
+    box-shadow: 0px 0px 16px white;
 }
 
 #nav-main {
@@ -108,7 +113,9 @@
     position        : absolute;
     background-color: rgba(51, 50, 40, 0.95);
     font-family     : 'Signika';
-    min-width       : 160px;
+    font-size  : 1.4vw;
+    width: 20vw;
+    max-width: 20vw;
     overflow        : auto;
     box-shadow      : 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index         : 1;

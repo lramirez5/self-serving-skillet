@@ -10,9 +10,9 @@ export function NavbarComponent() {
                     <div id="nav-title">Self Serving Skillet</div>
                 </div>
                 <div id="nav-main">
-                    <button className="nav-std-btn"><Link to='/'>Home</Link></button>
-                    <button className="nav-std-btn"><Link to='/recipes'>Food</Link></button>
-                    <button className="nav-std-btn"><Link to='/drinks'>Drink</Link></button>
+                    <button className="nav-std-btn" tabIndex='-1'><Link to='/'>Home</Link></button>
+                    <button className="nav-std-btn" tabIndex='-1'><Link to='/recipes'>Food</Link></button>
+                    <button className="nav-std-btn" tabIndex='-1'><Link to='/drinks'>Drink</Link></button>
                     <div className="nav-drop-btn" id="nav-menu-more">
                         <button id="nav-more-btn" >More</button>
                         <div id="nav-dropdown" className="nav-dropdown-content">

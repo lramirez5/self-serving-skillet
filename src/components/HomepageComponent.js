@@ -51,8 +51,8 @@ export function HomepageComponent() {
                                 <Link to='/techniques'>Technique Tues.</Link>
                             </div>
                         </div>
+                        <button className="std-btn" id="contact-btn" onClick={function () { alert("Coming Soon") }}>Contact</button>
                     </div>
-                    <button className="std-btn" id="contact-btn" onClick={function () { alert("Coming Soon") }}>Contact</button>
                 </div>
                 <div id="content">
                     <div id="subcontent1">
@@ -73,13 +73,15 @@ export function HomepageComponent() {
                     <div id="subcontent2">
                         <img src={board} alt="A cutting board." />
                         <div id="more-panels">
-                            <div id="blog-panel">
+                            <div id="theory-panel">
                                 <h1>Cooking Theory</h1>
                                 <p><Link to='/theory'>See updates <i className="arrow right"></i></Link></p>
                             </div>
-                            <div id="extras-panel">
+                            <div id="technique-panel">
                                 <h1>Technique Tuesdays</h1>
                                 <p><Link to='/essentials'>Coming soon <i className="arrow right"></i></Link></p>
+                            </div>
+                            <div id="essentials-panel">
                                 <h1>Kitchen Essentials for Every Skill Level</h1>
                                 <p><Link to='/techniques'>Coming soon <i className="arrow right"></i></Link></p>
                             </div>

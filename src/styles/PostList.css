@@ -1,3 +1,153 @@
+#list-head {
+    background: rgba(0, 0, 0, .6);
+    padding   : 40px 0 40px;
+    height: auto
+}
+
+#list-searchbar {
+    width     : 33vw;
+    max-width : 200px;
+    margin    : 0 auto 20px;
+    text-align: center;
+    position  : relative;
+}
+
+#search-input {
+    border-radius: 100px;
+    border       : none;
+    height       : 4vh;
+    width        : 100%;
+    padding      : 4px 40px 4px 20px;
+    margin       : 0 -40px 0;
+}
+
+#search-input:focus {
+    box-shadow: 0px 0px 8px white;
+    outline   : none;
+}
+
+#search-btn {
+    position     : absolute;
+    right        : -30px;
+    height       : 100%;
+    background   : none;
+    border-radius: 100px;
+    border       : none;
+    cursor       : pointer;
+}
+
+.circle {
+    border       : solid gray;
+    border-width : 2px;
+    border-radius: 100px;
+    display      : inline-block;
+    padding      : 6px;
+    position     : relative;
+    top          : -2px;
+    right        : -5px;
+}
+
+.handle {
+    border      : solid gray;
+    border-width: 0 0 0 3px;
+    display     : inline-block;
+    padding     : 5px;
+    position    : relative;
+    top         : 3px;
+    right       : -1px;
+    transform   : rotate(-32deg);
+}
+
+#search-btn:hover .circle {
+    border       : solid black;
+    border-width : 2px;
+    border-radius: 100px;
+    display      : inline-block;
+    padding      : 6px;
+    position     : relative;
+    top          : -2px;
+    right        : -5px;
+}
+
+#search-btn:hover .handle {
+    border      : solid black;
+    border-width: 0 0 0 3px;
+    display     : inline-block;
+    padding     : 5px;
+    position    : relative;
+    top         : 3px;
+    right       : -1px;
+    transform   : rotate(-32deg);
+}
+
+#search-btn:active {
+    background: rgba(0, 0, 0, .2);
+}
+
+#search-btn:active .circle {
+    border       : solid black;
+    border-width : 2px;
+    border-radius: 100px;
+    display      : inline-block;
+    padding      : 6px;
+    position     : relative;
+    top          : -2px;
+    right        : -5px;
+}
+
+#search-btn:active .handle {
+    border      : solid black;
+    border-width: 0 0 0 3px;
+    display     : inline-block;
+    padding     : 5px;
+    position    : relative;
+    top         : 3px;
+    right       : -1px;
+    transform   : rotate(-32deg);
+}
+
+#filter-info {
+    width        : 80%;
+    height       : 6vh;
+    line-height  : 2.5em;
+    margin       : auto;
+    color        : azure;
+    border-top   : 1px solid;
+    border-bottom: 1px solid;
+    border-color : #909999;
+}
+
+#search-info {
+    float  : left;
+    display: none;
+}
+
+#search-info button {
+    color        : #ffaaaa;
+    background   : none;
+    border       : 1px solid #909999;
+    margin-left  : 12px;
+    border-radius: 100px;
+    padding      : 6px;
+}
+
+#search-info button:hover {
+    background: rgba(255, 255, 255, .2);
+    cursor    : pointer;
+}
+
+#filter-options {
+    float: right;
+}
+
+#filter {
+    margin-left  : 4px;
+    background   : #dddddd;
+    border       : 1px solid #909999;
+    border-radius: 2px;
+    padding      : 6px;
+}
+
 #list-container {
     background   : rgba(0, 0, 0, .4);
     border-radius: 16px;
@@ -14,7 +164,7 @@
     border-radius: 8px;
     background   : rgba(0, 0, 0, .6);
     color        : white;
-    overflow: hidden;
+    overflow     : hidden;
 }
 
 .post-preview:hover {
@@ -37,18 +187,18 @@
 }
 
 .preview-content div {
-    height     : 18vh;
-    width      : 65%;
-    margin-left: 5%;
-    text-align : left;
+    height        : 18vh;
+    width         : 65%;
+    margin-left   : 5%;
+    text-align    : left;
     padding-bottom: 18px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow      : hidden;
+    text-overflow : ellipsis;
 }
 
 .preview-content div p {
-    height     : 9.4vh;
-    overflow: hidden;
+    height       : 9.4vh;
+    overflow     : hidden;
     text-overflow: ellipsis;
 }
 
@@ -58,13 +208,34 @@
 
 @media screen and (max-width: 800px) {
     #list-container {
-        width: 100%;
+        width     : 99%;
         text-align: left;
+        margin    : 0 0 0 0;
     }
+
+    #filter-info {
+        font-size: 2.8vw;
+    }
+
+    #search-info button {
+        font-size: 2.8vw;
+        padding: 2px;
+    }
+    
+    #filter-options {
+        float: left;
+    }
+
+    #filter {
+        font-size: 2.8vw;
+        padding: 2px;
+    }
+
     .post-preview {
-        width: 95%;
+        width    : 95%;
         max-width: 100%;
     }
+
     .post-content {
         padding: 0;
     }

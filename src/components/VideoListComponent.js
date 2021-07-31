@@ -73,19 +73,22 @@ export function VideoListComponent() {
           var vid = item.snippet.resourceId.videoId;
 
           var titlePieces = title.split("-");
-          var displayDesc = desc.substring(0, 50)
+          var displayDesc = desc//.substring(0, 50)
 
           if (titlePieces[1]) {
             displayDesc = titlePieces[1].trim();
             displayDesc = displayDesc[0].toUpperCase() + displayDesc.substring(1);
           }
+          if (titlePieces[0].length > 40) {
+            titlePieces[0] = titlePieces[0].substring(0,40) + '...';
+          }
 
           document.getElementById("vids").innerHTML += `
-        <article className="item" data-key="${vid}" data-title="${title}" data-desc="${desc}">
-          <img src="${thumb}" alt="" className="thumb">
-          <div className="details">
+        <article class="item" data-key="${vid}" data-title="${title}" data-desc="${desc}">
+          <img src="${thumb}" alt="" class="thumb">
+          <div class="details">
             <h4>${titlePieces[0]}</h4>
-            <p>${displayDesc}...</p>
+            <p>${displayDesc}</p>
           </div>
         </article>
         `;

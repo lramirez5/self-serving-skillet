@@ -34,18 +34,34 @@ export function PostListComponent() {
         default:
             document.location.href = '/Content-Not-Found';
     }
-    console.log(cat, postCategory)
 
     const [posts, setPosts] = useState([]);
+    const [unfilteredPosts, setUnfilteredPosts] = useState([]);
+    const [searchterm, setSearchTerm] = useState('');
+    const [searchfilter, setSearchFilter] = useState('new');
 
     useEffect(() => {
         fetchPosts();
+        var old_element = document.getElementById("search-input");
+        var new_element = old_element.cloneNode(true);
+        old_element.parentNode.replaceChild(new_element, old_element);
+        let el = document.getElementById("search-input")
+        el.addEventListener("keyup", e => {
+            e.preventDefault();
+            let keypress = e.key || e.keyIdentifier || e.keyCode || e.which;
+            if (keypress === 'Enter' || keypress === 13) {
+                setSearch();
+            }
+        });
+        el.value = '';
+        setSearchTerm('')
+        setSearchFilter('new');
     }, [cat]);
 
     async function fetchPosts() {
-        const apiData = await API.graphql({ query: categoryByDate, variables: { category: postCategory } });
-        console.log("Got data");
-        console.log(apiData);
+        const apiData = await API.graphql({ query: categoryByDate, variables: { category: postCategory } }); //, filter: {tags: {contains:"test"}}
+        //console.log("Got data");
+        //console.log(apiData);
         const postsFromAPI = apiData.data.categoryByDate.items;
         await Promise.all(postsFromAPI.map(async post => {
             if (post.images[0]) {
@@ -60,12 +76,83 @@ export function PostListComponent() {
         }))
         //console.log(postsFromAPI);
         setPosts(postsFromAPI);
+        setUnfilteredPosts(postsFromAPI);
+    }
+
+    useEffect(() => {
+        filterBySearch();
+    }, [searchfilter])
+
+    useEffect(() => {
+        document.getElementById("search-input").value = '';
+        filterBySearch();
+    }, [searchterm])
+
+    async function setSearch() {
+        //console.log('set search called: ' + document.getElementById("search-input").value)
+        setSearchTerm(document.getElementById("search-input").value);
+    }
+
+    function filterBySearch() {
+        //console.log('searchterm: ' + searchterm)
+        setPosts([])
+        if (searchterm !== '') {
+            const newPostsArray = unfilteredPosts.filter(post => post.tags.indexOf(searchterm.toLocaleLowerCase().replace(' ', '')) !== -1);
+            document.getElementById("search-term").innerHTML = `Showing results for "${searchterm}" (${newPostsArray.length} posts found)`;
+            document.getElementById("search-info").style.display = 'inline';
+            //console.log(newPostsArray)
+            setPostsByFilter(newPostsArray);
+        } else {
+            clearSearch();
+        }
+    }
+
+    function clearSearch() {
+        document.getElementById("search-term").innerHTML = '';
+        document.getElementById("search-info").style.display = 'none';
+        setSearchTerm('');
+        setPostsByFilter(unfilteredPosts);
+    }
+
+    function setPostsByFilter(postArray) {
+        //console.log('searchfilter: ' + searchfilter)
+        if (searchfilter === "old") {
+            setPosts([...postArray].reverse())
+        } else if (searchfilter === "abc") {
+            function compare(a, b) {
+                if (a.title < b.title) {
+                    return -1;
+                }
+                if (a.title > b.title) {
+                    return 1;
+                }
+                return 0;
+            }
+            setPosts([...postArray].sort(compare))
+        } else {
+            setPosts([...postArray])
+        }
+        //console.log('POSTS:')
+        //console.log(posts)
     }
 
     return (
         <div className="App">
             <NavbarComponent />
-            <h1 style={{fontFamily: 'Signika', color: 'lemonchiffon', background: 'rgba(0,0,0,.6)', padding: '40px 0 40px'}}>{pageTitle}</h1>
+            <div id="list-head">
+                <h1 style={{ fontFamily: 'Signika', color: 'lemonchiffon' }}>{pageTitle}</h1>
+                <div id="list-searchbar"><input id="search-input" placeholder={"Search " + pageTitle.toLocaleLowerCase()} /><button id="search-btn" onClick={() => setSearch()}><i className="circle"></i><i className="handle"></i></button></div>
+                <div id="filter-info">
+                    <div id="search-info"><span id="search-term"></span><button onClick={() => clearSearch()}>Clear &times;</button></div>
+                    <div id="filter-options">Sort by:
+                        <select id="filter" defaultValue="new" onChange={e => setSearchFilter(e.target.value)}>
+                            <option value="new">Date (newest)</option>
+                            <option value="old">Date (oldest)</option>
+                            <option value="abc">A - Z</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div id="list-container" style={{ marginBottom: 30 }}>
                 {
                     posts.map(post => (

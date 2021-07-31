@@ -86,25 +86,20 @@ body {
     width        : 8vh;
     margin-top   : .5vh;
     margin-left  : .5vh;
-    margin-right: 1vh;
+    margin-right : 1vh;
     border-radius: 100px;
     box-shadow   : 0px 0px 8px #cccccc;
 }
 
 #home-menu #logo img:hover {
-    box-shadow   : 0px 0px 16px white;
+    box-shadow: 0px 0px 16px white;
 }
 
 #menu-main {
     height     : 100%;
     display    : flex;
     align-items: center;
-}
-
-#home-menu #contact-btn {
-    float   : right;
-    position: relative;
-    top     : -100%;
+    float: right;
 }
 
 #menu-more {
@@ -173,7 +168,9 @@ body {
     position        : absolute;
     background-color: rgba(51, 50, 40, 0.95);
     font-family     : 'Signika';
-    min-width       : 160px;
+    font-size: 1.4vw;
+    width: 20vw;
+    max-width       : 20vw;
     overflow        : auto;
     box-shadow      : 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index         : 1;
@@ -205,8 +202,8 @@ body {
 
 #subcontent1 {
     width         : 96%;
-    overflow: hidden;
-    margin        : auto;
+    overflow      : hidden;
+    margin        : 0 auto 20px;
     display       : flex;
     flex-direction: row;
     position      : relative;
@@ -268,51 +265,52 @@ body {
 }
 
 #subcontent2 {
-    padding-top: 40px;
-    width      : 88%;
-    margin     : auto;
+    width : 96%;
+    margin: auto;
+    height: 96vh;
 }
 
 #subcontent2 img {
     width          : 100%;
-    height         : 96vh;
+    height         : 100%;
     object-fit     : cover;
     object-position: 50% 86%;
 }
 
 #more-panels {
-    display       : flex;
-    flex-direction: row;
-    position      : relative;
-    top           : -96vh;
+    position: relative;
+    top     : -96vh;
 }
 
 #more-panels div {
     flex-grow    : 1;
-    width        : 33vw;
-    height       : 60vh;
+    width        : 60%;
     background   : rgba(0, 0, 0, 0.7);
     border-radius: 20px;
     position     : absolute;
-    top          : 16vh;
     font-family  : 'Signika';
-    color        : lemonchiffon;
 }
 
 #more-panels h1 {
     width     : 80%;
     margin    : auto;
     margin-top: 20px;
+    color     : lemonchiffon;
 }
 
-#blog-panel {
-    right       : 50%;
-    margin-right: 2%;
+#theory-panel {
+    left: 2vw;
+    top : 12vh;
 }
 
-#extras-panel {
-    left       : 50%;
-    margin-left: 2%;
+#technique-panel {
+    right: 2vw;
+    top  : 36vh;
+}
+
+#essentials-panel {
+    left: 2vw;
+    top : 60vh;
 }
 
 #subcontent2 button {
@@ -391,7 +389,7 @@ a {
 
 @media screen and (max-width: 800px) {
     #home-head {
-        height: auto;
+        height        : auto;
         padding-bottom: 12px;
     }
 
@@ -400,7 +398,7 @@ a {
     }
 
     #home-head h4 {
-        top: 0vh;
+        top      : 0vh;
         font-size: 1rem;
     }
 
@@ -426,20 +424,25 @@ a {
 
     #food-panel,
     #drink-panel {
-        width : 40vw;
-        height: auto;
+        width  : 40vw;
+        height : auto;
         z-index: 1;
     }
 
     #food-panel {
         bottom: 35vh;
+        right : 51%;
+    }
+
+    #drink-panel {
+        left: 51%;
     }
 
     #subcontent1 img {
-        width: 100vw;
-        float: left;
+        width   : 100vw;
+        float   : left;
         position: relative;
-        left: -5vw;
+        left    : -5vw;
     }
 
     #food-panel .right-down,
@@ -450,6 +453,23 @@ a {
     #home-menu .std-btn,
     #more-btn {
         font-size: 2.6vw;
+    }
+
+    #more-panels h1 {
+        font-size: 20pt;
+    }
+
+    #subcontent2 {
+        overflow: hidden;
+    }
+
+    #subcontent2 img {
+        transform-origin: 50% 50%;
+        transform       : rotate(90deg) translateY(0);
+        width           : 96vh;
+        height          : 100%;
+        object-fit      : cover;
+        object-position : 50% 86%;
     }
 
 }
