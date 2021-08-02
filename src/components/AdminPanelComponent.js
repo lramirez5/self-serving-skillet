@@ -3,18 +3,21 @@ import { API, Storage } from 'aws-amplify';
 import { AmplifyAuthenticator, AmplifySignIn, AmplifySignOut } from '@aws-amplify/ui-react';
 import { postsByDate } from '../graphql/queries';
 import { createPost as createPostMutation, deletePost as deletePostMutation, updatePost as updatePostMutation } from '../graphql/mutations';
-import { HeaderComponent } from './HeaderComponent';
 import '../App.css'
 import '../styles/AdminPanel.css'
+import { NavbarComponent } from './NavbarComponent';
 
-const initialFormState = { id: '', category: '', title: '', description: '', video: '', images: '', tags: '', type: 'post' }
+const initialFormState = { id: '', category: '', title: '', description: '', video: '', images: [], tags: [], type: 'post' }
 
 export function AdminPanelComponent() {
 
+    var newPostData = initialFormState;
+    var updatedPostData = initialFormState;
+
     const [posts, setPosts] = useState([]);
     const [images, setImages] = useState([])
-    const [formData, setFormData] = useState(initialFormState);
-    const [updateData, setUpdateData] = useState(initialFormState);
+    //const [formData, setFormData] = useState(initialFormState);
+    //const [updateData, setUpdateData] = useState(initialFormState);
 
     useEffect(() => {
         var acc = document.getElementsByClassName("accordion");
@@ -24,17 +27,24 @@ export function AdminPanelComponent() {
             acc[i].addEventListener("click", function (e) {
                 this.classList.toggle("active");
                 var panel = this.nextElementSibling;
-                //console.log("height: " + panel.style.maxHeight);
                 if (panel.style.maxHeight) {
                     panel.style.maxHeight = null;
                 } else {
                     panel.style.maxHeight = "100%";
                 }
-                //console.log("new height: " + panel.style.maxHeight);
             });
         }
         fetchPosts();
         fetchImages();
+
+        let scrollId = document.location.href.split('#');
+        if (scrollId[1]) {
+            let el = document.getElementById(scrollId[1]);
+            if (el) {
+                el.scrollIntoView(true);
+                window.scrollTo(window.scrollX, window.scrollY - 40);
+            }
+        }
     }, []);
 
 
@@ -42,7 +52,7 @@ export function AdminPanelComponent() {
         const apiData = await API.graphql({ query: postsByDate });
         const postsFromAPI = apiData.data.postsByDate.items;
         await Promise.all(postsFromAPI.map(async post => {
-            if (post.images[0] !== '') {
+            if (post.images) {
                 for (let i = 0; i < post.images.length; i++) {
                     const image = await Storage.get(post.images[i]);
                     post.images[i] = image;
@@ -63,7 +73,20 @@ export function AdminPanelComponent() {
     }
 
     async function createPost() {
-        if (!formData.title || !formData.description) return;
+        getFormData();
+        if (!newPostData.title || !newPostData.description) return;
+        await API.graphql({ query: createPostMutation, variables: { input: newPostData } });
+        //if (newPostData.images !== '') {
+        for (let i = 0; i < newPostData.images.length; i++) {
+            const image = await Storage.get(newPostData.images[i]);
+            newPostData.images[i] = image;
+        }
+        //const image = await Storage.get(formData.image);
+        //formData.image = image;
+        //}
+        setPosts([newPostData, ...posts]);
+        clearFormData();
+        /*if (!formData.title || !formData.description) return;
         await API.graphql({ query: createPostMutation, variables: { input: formData } });
         if (formData.images !== '') {
             for (let i = 0; i < formData.images.length; i++) {
@@ -74,31 +97,35 @@ export function AdminPanelComponent() {
             //formData.image = image;
         }
         setPosts([formData, ...posts]);
-        setFormData(initialFormState);
+        setFormData(initialFormState);*/
     }
 
     async function updatePost() {
-        if (!updateData.title || !updateData.description) return;
-        await API.graphql({ query: updatePostMutation, variables: { input: updateData } });
-        if (updateData.images !== '') {
-            for (let i = 0; i < updateData.images.length; i++) {
-                const image = await Storage.get(updateData.images[i]);
-                updateData.images[i] = image;
+        getUpdateData();
+        if (!updatedPostData.title || !updatedPostData.description) return;
+        updatedPostData.tags = updatedPostData.tags.filter((value, index) => updatedPostData.tags.indexOf(value) === index);
+        await API.graphql({ query: updatePostMutation, variables: { input: updatedPostData } });
+        if (updatedPostData.images) {
+            for (let i = 0; i < updatedPostData.images.length; i++) {
+                const image = await Storage.get(updatedPostData.images[i]);
+                updatedPostData.images[i] = image;
             }
             //const image = await Storage.get(formData.image);
             //formData.image = image;
         }
-        const newPostsArray = posts.filter(post => post.id !== updateData.id);
+        const newPostsArray = posts.filter(post => post.id !== updatedPostData.id);
         //setPosts(newPostsArray);
-        setPosts([updateData, ...newPostsArray]);
+        setPosts([updatedPostData, ...newPostsArray]);
         closeUpdatePost();
     }
 
     async function deletePost({ id }) {
-        console.log("Deleting: " + id);
-        const newPostsArray = posts.filter(post => post.id !== id);
-        setPosts(newPostsArray);
-        await API.graphql({ query: deletePostMutation, variables: { input: { id } } });
+        if (window.confirm(`Remove ${id} from your posts?`)) {
+            console.log("Deleting: " + id);
+            const newPostsArray = posts.filter(post => post.id !== id);
+            setPosts(newPostsArray);
+            await API.graphql({ query: deletePostMutation, variables: { input: { id } } });
+        }
     }
 
     async function postImgChange(e) {
@@ -114,7 +141,8 @@ export function AdminPanelComponent() {
             await Storage.put(files[i].name, files[i]);
         }*/
         //console.log(filenames);
-        setFormData({ ...formData, images: filenames });
+        //setFormData({ ...formData, images: filenames });
+        newPostData.images = filenames;
         //setFormData({ ...formData, image: file.name });
         //await Storage.put(file.name, file);
         fetchPosts();
@@ -133,11 +161,12 @@ export function AdminPanelComponent() {
             await Storage.put(files[i].name, files[i]);
         }*/
         //console.log([...updateData.images, ...filenames]);
-        if (updateData.images) {
-            setUpdateData({ ...updateData, 'images': [...updateData.images, ...filenames] });
-        } else {
-            setUpdateData({ ...updateData, 'images': filenames });
-        }
+        //if (updateData.images) {
+        updatedPostData.images = [...updatedPostData.images, ...filenames];
+        //setUpdateData({ ...updateData, 'images': [...updateData.images, ...filenames] });
+        //} else {
+        //setUpdateData({ ...updateData, 'images': filenames });
+        //}
         //setFormData({ ...formData, image: file.name });
         //await Storage.put(file.name, file);
         //fetchPosts();
@@ -158,12 +187,25 @@ export function AdminPanelComponent() {
     }
 
     function showUpdatePost({ id, category, title, description, video, images, tags }) {
+        updatedPostData = initialFormState;
+        updatedPostData.id = id;
+        updatedPostData.category = category;
+        updatedPostData.title = title;
+        updatedPostData.description = description;
+        updatedPostData.video = video;
+        updatedPostData.tags = tags;
+
         document.getElementById("myNav").style.width = "100%";
         document.getElementById("up-category").value = category;
+        for (var option of document.getElementById('up-category').options) {
+            if (tags.includes(option.value)) {
+                option.selected = true;
+            }
+        }
         document.getElementById("up-title").value = title;
-        document.getElementById("up-desc").value = description.replace(/<br\/>/g, '\n');
-        document.getElementById("up-video").value = video;
-        if (images[0]) {
+        document.getElementById("up-desc").value = description.replace(/<br\/>/g, '\n').replace(/<a.*?>/g, '').replace(/<\/a>/g, '').replace(/<h3>/g, '<!').replace(/<\/h3>/g, '!>').replace(/<h4>/g, '<*').replace(/<\/h4>/g, '*>');
+        document.getElementById("up-video").value = "https://www.youtube.com/watch?v=" + video;
+        if (images && images[0]) {
             document.getElementById("curr-images").innerHTML = '';
             var imagenames = [];
             images.forEach(image => {
@@ -171,17 +213,22 @@ export function AdminPanelComponent() {
                 document.getElementById("curr-images").innerHTML += `<img src=${image} width='20%' alt="Just testing." />`;
                 imagenames.push(name);
             })
+            updatedPostData.images = imagenames;
+
         }
         document.getElementById("up-tags").value = tags;
-        setUpdateData({ ...updateData, 'id': id, 'category': category, 'title': title, 'description': description, 'video': video, 'images': imagenames, 'tags': tags });
+        //console.log(updatedPostData);
+
+        //setUpdateData({ ...updateData, 'id': id, 'category': category, 'title': title, 'description': description, 'video': video, 'images': imagenames, 'tags': tags });
     }
 
     function closeUpdatePost() {
-        setUpdateData(initialFormState);
+        //setUpdateData(initialFormState);
         document.getElementById("up-category").value = '';
         document.getElementById("up-title").value = '';
         document.getElementById("up-desc").innerHTML = '';
         document.getElementById("up-video").value = '';
+        document.getElementById("up-images").value = '';
         document.getElementById("curr-images").innerHTML = 'No images';
         document.getElementById("up-tags").value = '';
         document.getElementById("myNav").style.width = "0%";
@@ -198,25 +245,68 @@ export function AdminPanelComponent() {
         if (e.target.src) {
             if (e.target.style.opacity === '0') return;
             let img = JSON.stringify(e.target.src).split('public/')[1].split('?')[0];
+            //console.log('img: '+img)
 
             if (window.confirm(`Remove ${img} from this post?`)) {
-                //console.log(updateData.images)
-                if (updateData.images[0]) {
+                //console.log(updatedPostData.images)
+                if (updatedPostData.images.length !== 0) {
                     var names = [];
-                    updateData.images.forEach(image => names.push(image));
+                    updatedPostData.images.forEach(image => names.push(image));
                     var index = names.indexOf(img);
                     //console.log("index: "+index)
                     if (index > -1) {
                         names.splice(index, 1);
                         //console.log(names);
-                        setUpdateData({ ...updateData, 'images': names });
+                        //setUpdateData({ ...updateData, 'images': names });
+                        updatedPostData.images = names;
                         e.target.style.opacity = "0";
                         //e.target.style.border =  "1px solid red"
-                        //console.log(updateData.images);
+                        //console.log(updatedPostData.images);
                     }
                 }
             }
         }
+    }
+
+    function getFormData() {
+        newPostData.id = document.getElementById("create-title").value.toLowerCase().replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '-');
+        newPostData.category = document.getElementById("create-category").value;
+        newPostData.title = document.getElementById("create-title").value;
+        newPostData.description = urlify(document.getElementById("create-desc").value.replace(/<!/g, '<h3>').replace(/!>/g, '</h3>').replace(/<\*/g, '<h4>').replace(/\*>/g, '</h4>')).replace(/\n/g, '<br/>');
+        newPostData.video = document.getElementById("create-video").value.split("v=").slice(-1)[0];
+        var selected = [];
+        for (var option of document.getElementById('create-category').options) {
+            if (option.selected) {
+                selected.push(option.value);
+            }
+        }
+        //console.log(selected);
+        newPostData.tags = [...selected, ...document.getElementById("create-tags").value.split(",").map(item => item.replace(/[^A-Za-z0-9]/g, '').toLowerCase())];
+    }
+
+    function clearFormData() {
+        document.getElementById("create-category").value = '';
+        document.getElementById("create-title").value = '';
+        document.getElementById("create-desc").value = '';
+        document.getElementById("create-video").value = '';
+        document.getElementById("create-images").value = '';
+        document.getElementById("create-tags").value = '';
+    }
+
+    function getUpdateData() {
+        updatedPostData.id = document.getElementById("up-title").value.toLowerCase().replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '-');
+        updatedPostData.category = document.getElementById("up-category").value;
+        updatedPostData.title = document.getElementById("up-title").value;
+        updatedPostData.description = urlify(document.getElementById("up-desc").value.replace(/<!/g, '<h3>').replace(/!>/g, '</h3>').replace(/<\*/g, '<h4>').replace(/\*>/g, '</h4>')).replace(/\n/g, '<br/>');
+        updatedPostData.video = document.getElementById("up-video").value.split("v=").slice(-1)[0];
+        var selected = [];
+        for (var option of document.getElementById('up-category').options) {
+            if (option.selected) {
+                selected.push(option.value);
+            }
+        }
+        //console.log(selected);
+        updatedPostData.tags = [...selected, ...document.getElementById("up-tags").value.split(",").map(item => item.replace(/[^A-Za-z0-9]/g, '').toLowerCase())];
     }
 
     return (
@@ -226,7 +316,7 @@ export function AdminPanelComponent() {
                     <div slot="secondary-footer-content"></div>
                 </AmplifySignIn>
                 <div className="App">
-                    <HeaderComponent />
+                    <NavbarComponent />
                     <div id="myNav" className="overlay">
                         <p className="closebtn" onClick={() => { closeUpdatePost() }}>&times;</p>
                         <div className="overlay-content">
@@ -234,7 +324,7 @@ export function AdminPanelComponent() {
                                 <ul className="flex-outer">
                                     <li className="postInput">
                                         <label>Select the category of your post: </label>
-                                        <select id="up-category" onChange={e => setUpdateData({ ...updateData, 'category': e.target.value })}>
+                                        <select id="up-category" multiple>
                                             <option value="foodrecipe">Food Recipe</option>
                                             <option value="drinkrecipe">Drink Recipe</option>
                                             <option value="theory">Cooking Theory</option>
@@ -246,7 +336,6 @@ export function AdminPanelComponent() {
                                     <li className="postInput">
                                         <label>Give your post a title: </label>
                                         <input
-                                            onChange={e => setUpdateData({ ...updateData, 'title': e.target.value, 'id': e.target.value.toLowerCase().replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '-') })}
                                             placeholder="Post title (required)"
                                             id="up-title"
                                         />
@@ -255,7 +344,6 @@ export function AdminPanelComponent() {
                                         <label>Add a body/description to your post: </label>
                                         <textarea
                                             rows="6"
-                                            onChange={e => setUpdateData({ ...updateData, 'description': urlify(e.target.value).replace(/\n/g, '<br/>') })}
                                             placeholder="Post description (required)"
                                             id="up-desc"
                                         />
@@ -263,7 +351,6 @@ export function AdminPanelComponent() {
                                     <li className="postInput">
                                         <label>Add a video link: </label>
                                         <input
-                                            onChange={e => setUpdateData({ ...updateData, 'video': e.target.value.split("v=").slice(-1)[0] })}
                                             placeholder="Link to Youtube video"
                                             id="up-video"
                                         />
@@ -284,7 +371,6 @@ export function AdminPanelComponent() {
                                     <li className="postInput">
                                         <label>Add tags: </label>
                                         <input
-                                            onChange={e => setUpdateData({ ...updateData, 'tags': e.target.value.split(",").map(item => item.trim()) })}
                                             placeholder="Tags must be separated by commas"
                                             id="up-tags"
                                         />
@@ -302,8 +388,8 @@ export function AdminPanelComponent() {
                         <div className="flex-container">
                             <ul className="flex-outer">
                                 <li className="postInput">
-                                    <label>Select the category of your post: </label>
-                                    <select value={formData.category} onChange={e => setFormData({ ...formData, 'category': e.target.value })}>
+                                    <label>Select the category of your post:<br /><span style={{ fontSize: '8pt' }}>(hold 'ctrl' to select multiple)</span></label>
+                                    <select id="create-category" multiple >
                                         <option value="foodrecipe">Food Recipe</option>
                                         <option value="drinkrecipe">Drink Recipe</option>
                                         <option value="theory">Cooking Theory</option>
@@ -315,31 +401,29 @@ export function AdminPanelComponent() {
                                 <li className="postInput">
                                     <label>Give your post a title: </label>
                                     <input
-                                        onChange={e => setFormData({ ...formData, 'title': e.target.value, 'id': e.target.value.toLowerCase().replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '-') })}
+                                        id="create-title"
                                         placeholder="Post title (required)"
-                                        value={formData.title}
                                     />
                                 </li>
                                 <li className="postInput">
-                                    <label>Add a body/description to your post: </label>
+                                    <label>Add a body/description to your post: <br /><span style={{ fontSize: '6pt' }}>(To create headers, surround text with <strong style={{ color: 'black', fontSize: '10pt' }}>&lt;!</strong><em>Heading text</em><strong style={{ color: 'black', fontSize: '10pt' }}>!&gt;</strong> or <strong style={{ color: 'black', fontSize: '10pt' }}>&lt;*</strong><em>Subheading text</em><strong style={{ color: 'black', fontSize: '10pt' }}>*&gt;</strong>)</span></label>
                                     <textarea
+                                        id="create-desc"
                                         rows="6"
-                                        onChange={e => setFormData({ ...formData, 'description': urlify(e.target.value).replace(/\n/g, '<br/>') })}
                                         placeholder="Post description (required)"
-                                        value={formData.description}
                                     />
                                 </li>
                                 <li className="postInput">
                                     <label>Add a video link: </label>
                                     <input
-                                        onChange={e => setFormData({ ...formData, 'video': e.target.value.split("v=").slice(-1)[0] })}
+                                        id="create-video"
                                         placeholder="Link to Youtube video"
-                                        value={formData.video}
                                     />
                                 </li>
                                 <li className="postInput">
                                     <label>Add image(s): </label>
                                     <input
+                                        id="create-images"
                                         type="file"
                                         accept="image/png, image/jpeg"
                                         multiple={true}
@@ -347,11 +431,20 @@ export function AdminPanelComponent() {
                                     />
                                 </li>
                                 <li className="postInput">
-                                    <label>Add tags: </label>
+                                    <label>Add tags:
+                                        <div className="tooltip"><span style={{ background: 'rgba(0,0,0,.4)', borderRadius: '6px', textTransform: 'lowercase', fontSize: '6pt', padding: '8px', textAlign: 'center' }}>About tags</span>
+                                            <span className="tooltiptext" style={{ fontSize: '9pt' }}>A note about tags:<br />
+                                                <span style={{ color: '#ccccff' }}>Tags are used for searchability and any tags you add will be converted down to lowercase letters (and numbers). For example, adding a "Shepherd's Pie 2.0" tag will reduce to "shepherdspie20".
+                                                </span><br />
+                                                <span style={{ color: '#ccffcc' }}>Also of note, a long/wordy tag can replace several short tags. A post with the tag "buffalochickentacos" does not need additional "chicken" and "taco" tags since both are already included in the tag.
+                                                </span><br />
+                                                <span style={{ color: '#ffcccc' }}>Finally, pluralizing tags is better for searchability. A post tagged "balsamicvinegar" WON'T show up if a user searches "vinegars". Tagging "balsamicvinegars" will fix this.
+                                                </span>
+                                            </span>
+                                        </div></label>
                                     <input
-                                        onChange={e => setFormData({ ...formData, 'tags': e.target.value.split(",").map(item => item.trim()) })}
+                                        id="create-tags"
                                         placeholder="Tags must be separated by commas"
-                                        value={formData.tags}
                                     />
                                 </li>
                                 <li>
@@ -381,17 +474,17 @@ export function AdminPanelComponent() {
                         </div>
                     </div>
 
-
-
-                    <button className="accordion">My Posts</button>
-                    <div className="panel">
+                    <div>
                         <div className="PostViewer" >
-                            <div style={{ marginBottom: 30 }}>
+                            <div style={{ marginBottom: 30, background: 'white' }}>
+                                <h1 style={{ background: '#cccccc' }}>My Posts</h1>
+                                <p style={{ borderBottom: '2px solid black', paddingBottom: '12px' }}>Want to jump to a specific post? Go to <strong>www.selfservingskillet.com/admin#&lt;&lt;post-title&gt;&gt;</strong> <br />
+                                    Example: To update the post at www.selfservingskillet.com/recipes/<strong>carbonara-and-cake</strong>, go to www.selfservingskillet.com/admin<strong>#carbonara-and-cake</strong> </p>
                                 {
                                     posts.map(post => (
-                                        <div key={post.id || post.title} style={{ borderBottom: '2px solid black', padding: '24px' }}>
+                                        <div key={post.id || post.title} id={post.id} style={{ borderBottom: '2px solid black', padding: '24px' }}>
                                             <h2>{post.title}</h2>
-                                            <p>{post.description}</p>
+                                            <p style={{ textAlign: 'left', fontSize: '10pt' }} dangerouslySetInnerHTML={{ __html: post.description }}></p>
                                             <div>
                                                 {
                                                     post.video &&
@@ -405,7 +498,7 @@ export function AdminPanelComponent() {
                                                 }
                                                 {
                                                     //post.images[0] && <img src={post.images[0]} style={{ width: 400 }} alt="Just testing." />
-                                                    post.images && post.images[0] && post.images.map(image => (
+                                                    post.images && post.images.length > 0 && post.images.map(image => (
                                                         <img key={image.substring(50, 250)} src={image} style={{ width: 120 }} alt="Just testing." />
                                                     ))
                                                 }

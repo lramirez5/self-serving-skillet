@@ -1,9 +1,6 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ListFoodRecipesComponent } from './components/ListFoodRecipesComponent';
-import { ListDrinkRecipesComponent } from './components/ListDrinkRecipesComponent';
-import { ListBlogPostsComponent } from './components/ListBlogPostsComponent';
 import { AdminPanelComponent } from './components/AdminPanelComponent';
 import { HomepageComponent } from './components/HomepageComponent'
 import { Placeholder } from './components/Placeholder';

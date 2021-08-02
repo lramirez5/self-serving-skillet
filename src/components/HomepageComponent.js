@@ -41,8 +41,8 @@ export function HomepageComponent() {
                         </div>
                     </div>
                     <div id="menu-main">
-                        <button className="std-btn"><Link to='/recipes'>Food</Link></button>
-                        <button className="std-btn"><Link to='/drinks'>Drink</Link></button>
+                        <button className="std-btn" tabIndex='-1'><Link to='/recipes'>Food</Link></button>
+                        <button className="std-btn" tabIndex='-1'><Link to='/drinks'>Drink</Link></button>
                         <div className="drop-btn" id="menu-more">
                             <button id="more-btn" >More</button>
                             <div id="menu-dropdown" className="dropdown-content">
@@ -51,7 +51,7 @@ export function HomepageComponent() {
                                 <Link to='/techniques'>Technique Tues.</Link>
                             </div>
                         </div>
-                        <button className="std-btn" id="contact-btn" onClick={function () { alert("Coming Soon") }}>Contact</button>
+                        <button className="std-btn" tabIndex='-1' id="contact-btn" onClick={function () { alert("Coming Soon") }}>Contact</button>
                     </div>
                 </div>
                 <div id="content">

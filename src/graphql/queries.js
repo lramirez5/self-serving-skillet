@@ -41,10 +41,13 @@ export const listPosts = /* GraphQL */ `
   }
 `;
 export const postsByDate = /* GraphQL */ `
-  query PostsByDate {
+  query PostsByDate (
+      $filter: ModelPostFilterInput
+    ) {
     postsByDate(
       type: "post"
       sortDirection: DESC
+      filter: $filter
     ) {
       items {
         id

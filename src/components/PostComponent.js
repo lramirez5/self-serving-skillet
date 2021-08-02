@@ -26,6 +26,7 @@ export function PostComponent() {
             //console.log(post)
             setCarousel();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [post]);
 
     async function fetchPost() {
@@ -41,13 +42,18 @@ export function PostComponent() {
         }
         setPost(postFromAPI);
         document.getElementById("post-desc").innerHTML = postFromAPI.description;
-        console.log(postFromAPI);
+        //console.log(postFromAPI);
     }
 
     function setCarousel() {
         //console.log("Post for carousel")
         //console.log(post)
-        document.getElementById('carousel').style.height = '60vh';
+        //console.log(window.innerWidth)
+        if (window.innerWidth < 800) {
+            document.getElementById('carousel').style.height = '56.25vw';
+        } else {
+            document.getElementById('carousel').style.height = '60vh';
+        }
         var media = [];
         if (post.video) {
             media.push('carousel-vid');
@@ -57,7 +63,7 @@ export function PostComponent() {
                 media.push(`img${i}`)
             }
         }
-        if (media.length == 0) {
+        if (media.length === 0) {
             document.getElementById('carousel').style.height = '0vh';
             return;
         }
@@ -65,7 +71,7 @@ export function PostComponent() {
         //console.log(media)
         document.getElementById(media[0]).classList.add('centered')
         for (let i = 1; i < media.length; i++) {
-            let elClass = i == 1 ? 'right1' : i == 2 ? 'right2' : 'right3';
+            let elClass = i === 1 ? 'right1' : i === 2 ? 'right2' : 'right3';
             document.getElementById(media[i]).classList.add(elClass)
         }
         if (media.length > 1) {
@@ -76,10 +82,16 @@ export function PostComponent() {
             }
             dots.innerHTML += `<div class="dot-arrow-right" ></div>`;
             document.getElementsByClassName("dot-arrow-left")[0].addEventListener('click', () => {
-                currentSlide(media, carouselIndex-1);
+                currentSlide(media, carouselIndex - 1);
             })
             document.getElementsByClassName("dot-arrow-right")[0].addEventListener('click', () => {
-                currentSlide(media, carouselIndex+1);
+                currentSlide(media, carouselIndex + 1);
+            })
+            document.getElementById("left-shadow").addEventListener('click', () => {
+                currentSlide(media, carouselIndex - 1);
+            })
+            document.getElementById("right-shadow").addEventListener('click', () => {
+                currentSlide(media, carouselIndex + 1);
             })
             var elem = document.getElementsByClassName("dot");
             elem[0].className += " dot-active";
@@ -87,6 +99,42 @@ export function PostComponent() {
                 (function () {
                     elem[i].addEventListener("click", function () { currentSlide(media, i); }, false);
                 }()); // immediate invocation
+            }
+            let touchstartX = 0;
+            let touchendX = 0;
+
+            const slider = document.getElementById('carousel');
+
+            function handleGesture() {
+                if (touchendX < touchstartX) alert('swiped left!');
+                if (touchendX > touchstartX) alert('swiped right!');
+            }
+
+            slider.addEventListener('touchstart', e => {
+                touchstartX = e.changedTouches[0].screenX;
+            });
+
+            slider.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                handleGesture();
+            });
+
+            if (media[0] === 'carousel-vid') {
+                const vidslider = document.getElementById('carousel-vid');
+
+                function handleGesture() {
+                    if (touchendX < touchstartX) alert('swiped left!');
+                    if (touchendX > touchstartX) alert('swiped right!');
+                }
+
+                vidslider.addEventListener('touchstart', e => {
+                    touchstartX = e.changedTouches[0].screenX;
+                });
+
+                vidslider.addEventListener('touchend', e => {
+                    touchendX = e.changedTouches[0].screenX;
+                    handleGesture();
+                });
             }
         }
         /* if (post.video) {
@@ -117,7 +165,7 @@ export function PostComponent() {
         var idx;
         if (index < 0) {
             idx = media.length - 1;
-        } else if(index >= media.length) {
+        } else if (index >= media.length) {
             idx = 0;
         } else {
             idx = index;
@@ -128,17 +176,17 @@ export function PostComponent() {
             let el = document.getElementById(media[i])
             el.classList = ""
             let offset = idx - i;
-            if (offset == 0) {
+            if (offset === 0) {
                 el.classList.add('centered')
-            } else if (offset == 1) {
+            } else if (offset === 1) {
                 el.classList.add('left1')
-            } else if (offset == 2) {
+            } else if (offset === 2) {
                 el.classList.add('left2')
             } else if (offset > 2) {
                 el.classList.add('left3')
-            } else if (offset == -1) {
+            } else if (offset === -1) {
                 el.classList.add('right1')
-            } else if (offset == -2) {
+            } else if (offset === -2) {
                 el.classList.add('right2')
             } else if (offset < -2) {
                 el.classList.add('right3')

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { API, Storage } from 'aws-amplify';
-import { categoryByDate } from '../graphql/queries';
+import { categoryByDate, postsByDate } from '../graphql/queries';
 import '../styles/PostList.css';
 import { NavbarComponent } from './NavbarComponent';
 
@@ -56,13 +56,12 @@ export function PostListComponent() {
         el.value = '';
         setSearchTerm('')
         setSearchFilter('new');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cat]);
 
     async function fetchPosts() {
-        const apiData = await API.graphql({ query: categoryByDate, variables: { category: postCategory } }); //, filter: {tags: {contains:"test"}}
-        //console.log("Got data");
-        //console.log(apiData);
-        const postsFromAPI = apiData.data.categoryByDate.items;
+        const apiData = await API.graphql({ query: postsByDate});//, filter: {tags: {contains:"test"}}});//variables: { category: postCategory } }); //, filter: {tags: {contains:"test"}}
+        const postsFromAPI = apiData.data.postsByDate.items.filter(post => post.tags.includes(postCategory));
         await Promise.all(postsFromAPI.map(async post => {
             if (post.images[0]) {
                 /*for (let i = 0; i < post.images.length; i++) {
@@ -81,11 +80,13 @@ export function PostListComponent() {
 
     useEffect(() => {
         filterBySearch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchfilter])
 
     useEffect(() => {
         document.getElementById("search-input").value = '';
         filterBySearch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchterm])
 
     async function setSearch() {
@@ -97,7 +98,7 @@ export function PostListComponent() {
         //console.log('searchterm: ' + searchterm)
         setPosts([])
         if (searchterm !== '') {
-            const newPostsArray = unfilteredPosts.filter(post => post.tags.indexOf(searchterm.toLocaleLowerCase().replace(' ', '')) !== -1);
+            const newPostsArray = unfilteredPosts.filter(post => post.tags.some(tag => tag.includes(searchterm.toLocaleLowerCase().replace(/[^a-z0-9]/g, ''))));
             document.getElementById("search-term").innerHTML = `Showing results for "${searchterm}" (${newPostsArray.length} posts found)`;
             document.getElementById("search-info").style.display = 'inline';
             //console.log(newPostsArray)
@@ -168,7 +169,7 @@ export function PostListComponent() {
                                     }
                                     <div>
                                         <h2>{post.title}</h2>
-                                        <p>{post.description.replace(/<br ?\/>/g, '\n').split('.')[0].substring(0, 100) + '...'}</p>
+                                        <p>{post.description.replace(/<br ?\/>/g, '\n').split('.')[0].substring(0, 255) + '...'}</p>
                                     </div>
                                 </article>
                             </div>
