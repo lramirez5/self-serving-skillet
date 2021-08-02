@@ -14,6 +14,8 @@ export function AdminPanelComponent() {
     var newPostData = initialFormState;
     var updatedPostData = initialFormState;
 
+    var idToDelete;
+
     const [posts, setPosts] = useState([]);
     const [images, setImages] = useState([])
     //const [formData, setFormData] = useState(initialFormState);
@@ -31,6 +33,7 @@ export function AdminPanelComponent() {
                     panel.style.maxHeight = null;
                 } else {
                     panel.style.maxHeight = "100%";
+                    fetchPosts();
                 }
             });
         }
@@ -86,6 +89,7 @@ export function AdminPanelComponent() {
         //}
         setPosts([newPostData, ...posts]);
         clearFormData();
+        document.getElementsByClassName('accordion')[0].click();
         /*if (!formData.title || !formData.description) return;
         await API.graphql({ query: createPostMutation, variables: { input: formData } });
         if (formData.images !== '') {
@@ -101,22 +105,38 @@ export function AdminPanelComponent() {
     }
 
     async function updatePost() {
-        getUpdateData();
-        if (!updatedPostData.title || !updatedPostData.description) return;
-        updatedPostData.tags = updatedPostData.tags.filter((value, index) => updatedPostData.tags.indexOf(value) === index);
-        await API.graphql({ query: updatePostMutation, variables: { input: updatedPostData } });
-        if (updatedPostData.images) {
+        var idUpdate = getUpdateData();
+        if (idUpdate) {
+            if (!updatedPostData.title || !updatedPostData.description) return;
+            await API.graphql({ query: deletePostMutation, variables: { input: { id: idToDelete } } });
+            const newPostsArray = posts.filter(post => post.id !== idToDelete);
+            await API.graphql({ query: createPostMutation, variables: { input: updatedPostData } });
             for (let i = 0; i < updatedPostData.images.length; i++) {
                 const image = await Storage.get(updatedPostData.images[i]);
                 updatedPostData.images[i] = image;
             }
             //const image = await Storage.get(formData.image);
             //formData.image = image;
+            //}
+            setPosts([updatedPostData, ...newPostsArray]);
+            closeUpdatePost();
+        } else {
+            if (!updatedPostData.title || !updatedPostData.description) return;
+            updatedPostData.tags = updatedPostData.tags.filter((value, index) => updatedPostData.tags.indexOf(value) === index);
+            await API.graphql({ query: updatePostMutation, variables: { input: updatedPostData } });
+            if (updatedPostData.images) {
+                for (let i = 0; i < updatedPostData.images.length; i++) {
+                    const image = await Storage.get(updatedPostData.images[i]);
+                    updatedPostData.images[i] = image;
+                }
+                //const image = await Storage.get(formData.image);
+                //formData.image = image;
+            }
+            const newPostsArray = posts.filter(post => post.id !== updatedPostData.id);
+            //setPosts(newPostsArray);
+            setPosts([updatedPostData, ...newPostsArray]);
+            closeUpdatePost();
         }
-        const newPostsArray = posts.filter(post => post.id !== updatedPostData.id);
-        //setPosts(newPostsArray);
-        setPosts([updatedPostData, ...newPostsArray]);
-        closeUpdatePost();
     }
 
     async function deletePost({ id }) {
@@ -269,7 +289,7 @@ export function AdminPanelComponent() {
     }
 
     function getFormData() {
-        newPostData.id = document.getElementById("create-title").value.toLowerCase().replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '-');
+        newPostData.id = document.getElementById("create-title").value.toLowerCase().trim().replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '-');
         newPostData.category = document.getElementById("create-category").value;
         newPostData.title = document.getElementById("create-title").value;
         newPostData.description = urlify(document.getElementById("create-desc").value.replace(/<!/g, '<h3>').replace(/!>/g, '</h3>').replace(/<\*/g, '<h4>').replace(/\*>/g, '</h4>')).replace(/\n/g, '<br/>');
@@ -294,7 +314,16 @@ export function AdminPanelComponent() {
     }
 
     function getUpdateData() {
-        updatedPostData.id = document.getElementById("up-title").value.toLowerCase().replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '-');
+        var isIdUpdated = false;
+        idToDelete = null;
+        if (updatedPostData.id !== document.getElementById("up-title").value.toLowerCase().replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '-')) {
+            isIdUpdated = true;
+            //const newPostsArray = posts.filter(post => post.id !== updatedPostData.id);
+            //setPosts(newPostsArray);
+            idToDelete = updatedPostData.id;
+            //await API.graphql({ query: deletePostMutation, variables: { input: { idToDelete } } });
+        }
+        updatedPostData.id = document.getElementById("up-title").value.toLowerCase().trim().replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '-');
         updatedPostData.category = document.getElementById("up-category").value;
         updatedPostData.title = document.getElementById("up-title").value;
         updatedPostData.description = urlify(document.getElementById("up-desc").value.replace(/<!/g, '<h3>').replace(/!>/g, '</h3>').replace(/<\*/g, '<h4>').replace(/\*>/g, '</h4>')).replace(/\n/g, '<br/>');
@@ -307,6 +336,7 @@ export function AdminPanelComponent() {
         }
         //console.log(selected);
         updatedPostData.tags = [...selected, ...document.getElementById("up-tags").value.split(",").map(item => item.replace(/[^A-Za-z0-9]/g, '').toLowerCase())];
+        return isIdUpdated;
     }
 
     return (
@@ -399,14 +429,14 @@ export function AdminPanelComponent() {
                                     </select>
                                 </li>
                                 <li className="postInput">
-                                    <label>Give your post a title: </label>
+                                    <label>Give your post a unique title:<br /><span style={{ fontSize: '8pt' }}>(5 or less words recommended)</span></label>
                                     <input
                                         id="create-title"
                                         placeholder="Post title (required)"
                                     />
                                 </li>
                                 <li className="postInput">
-                                    <label>Add a body/description to your post: <br /><span style={{ fontSize: '6pt' }}>(To create headers, surround text with <strong style={{ color: 'black', fontSize: '10pt' }}>&lt;!</strong><em>Heading text</em><strong style={{ color: 'black', fontSize: '10pt' }}>!&gt;</strong> or <strong style={{ color: 'black', fontSize: '10pt' }}>&lt;*</strong><em>Subheading text</em><strong style={{ color: 'black', fontSize: '10pt' }}>*&gt;</strong>)</span></label>
+                                    <label>Add a body/description to your post: <br /><span style={{ fontSize: '6pt' }}>To create headers:<br/><strong style={{ color: 'black', fontSize: '10pt' }}>&lt;!</strong><em>Your heading text</em><strong style={{ color: 'black', fontSize: '10pt' }}>!&gt;</strong> or <br/><strong style={{ color: 'black', fontSize: '10pt' }}>&lt;*</strong><em>Your subheading text</em><strong style={{ color: 'black', fontSize: '10pt' }}>*&gt;</strong></span></label>
                                     <textarea
                                         id="create-desc"
                                         rows="6"
@@ -484,7 +514,9 @@ export function AdminPanelComponent() {
                                     posts.map(post => (
                                         <div key={post.id || post.title} id={post.id} style={{ borderBottom: '2px solid black', padding: '24px' }}>
                                             <h2>{post.title}</h2>
-                                            <p style={{ textAlign: 'left', fontSize: '10pt' }} dangerouslySetInnerHTML={{ __html: post.description }}></p>
+                                            <button style={{ margin: '0 3px' }} onClick={() => deletePost(post)}>Delete post</button>
+                                            <button style={{ margin: '0 3px' }} onClick={() => showUpdatePost(post)}>Update post</button>
+                                            <p className="post-desc-p" style={{ textAlign: 'left', fontSize: '10pt' }} dangerouslySetInnerHTML={{ __html: post.description }}></p>
                                             <div>
                                                 {
                                                     post.video &&
@@ -503,8 +535,10 @@ export function AdminPanelComponent() {
                                                     ))
                                                 }
                                             </div>
-                                            <button onClick={() => deletePost(post)}>Delete post</button>
-                                            <button onClick={() => showUpdatePost(post)}>Update post</button>
+                                            {
+                                                console.log(post.tags)
+                                            }
+                                            <p style={{textAlign: 'left', fontSize:'9pt', color:'gray', width: '95%',height:'auto'}} dangerouslySetInnerHTML={{__html: 'Tags: '+post.tags.toString().replaceAll(',',', ')}}></p>
                                         </div>
                                     ))
                                 }
