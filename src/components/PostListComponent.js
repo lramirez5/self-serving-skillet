@@ -42,6 +42,7 @@ export function PostListComponent() {
 
     useEffect(() => {
         fetchPosts();
+        window.scrollTo(0, 0);
         var old_element = document.getElementById("search-input");
         var new_element = old_element.cloneNode(true);
         old_element.parentNode.replaceChild(new_element, old_element);
@@ -60,7 +61,7 @@ export function PostListComponent() {
     }, [cat]);
 
     async function fetchPosts() {
-        const apiData = await API.graphql({ query: postsByDate});//, filter: {tags: {contains:"test"}}});//variables: { category: postCategory } }); //, filter: {tags: {contains:"test"}}
+        const apiData = await API.graphql({ query: postsByDate });//, filter: {tags: {contains:"test"}}});//variables: { category: postCategory } }); //, filter: {tags: {contains:"test"}}
         const postsFromAPI = apiData.data.postsByDate.items.filter(post => post.tags.includes(postCategory));
         await Promise.all(postsFromAPI.map(async post => {
             if (post.images[0]) {
@@ -92,6 +93,24 @@ export function PostListComponent() {
     async function setSearch() {
         //console.log('set search called: ' + document.getElementById("search-input").value)
         setSearchTerm(document.getElementById("search-input").value);
+        var field = document.createElement('input');
+        field.setAttribute('type', 'text');
+        document.body.appendChild(field);
+        
+        field.style.height = '1px'
+        field.style.width = '1px'
+        field.style.position = 'absolute';
+        field.style.top = '0';
+        field.style.left = '0';
+
+        setTimeout(function () {
+            field.focus();
+            setTimeout(function () {
+                field.setAttribute('style', 'display:none;');
+                //window.scrollTo(0,0);
+            }, 10);
+        }, 10);
+        
     }
 
     function filterBySearch() {

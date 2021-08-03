@@ -31,7 +31,7 @@
     width        : 8vh;
     margin-top   : .5vh;
     margin-left  : .5vh;
-    margin-right: 1vh;
+    margin-right : 1vh;
     border-radius: 100px;
     box-shadow   : 0px 0px 8px #cccccc;
 }
@@ -44,7 +44,7 @@
     height     : 100%;
     display    : flex;
     align-items: center;
-    float: right;
+    float      : right;
 }
 
 #nav-menu-more {
@@ -113,9 +113,9 @@
     position        : absolute;
     background-color: rgba(51, 50, 40, 0.95);
     font-family     : 'Signika';
-    font-size  : 1.4vw;
-    width: 20vw;
-    max-width: 20vw;
+    font-size       : 1.4vw;
+    width           : 20vw;
+    max-width       : 20vw;
     overflow        : auto;
     box-shadow      : 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index         : 1;
@@ -138,8 +138,24 @@
 }
 
 @media screen and (max-width: 800px) {
+
     #nav-menu .nav-std-btn,
-    #nav-more-btn {
-        font-size: 2.2vw;
+    #nav-more-btn,
+    .nav-dropdown-content {
+        font-size: 2.6vw;
+    }
+
+    #nav-menu .nav-std-btn,
+    #nav-menu .nav-drop-btn {
+        width  : 12vw;
+    }
+
+    .nav-dropdown-content {
+        width           : 24vw;
+        max-width       : 24vw;
+    }
+
+    #nav-menu #nav-logo #nav-title {
+        font-size     : 2.8vw;
     }
 }

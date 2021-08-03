@@ -15,6 +15,7 @@
   width     : 60%;
   height    : 100%;
   overflow-y: hidden;
+  border-bottom: 1px solid #777;
 }
 
 #list {
@@ -113,6 +114,7 @@
   background-color: #222;
   color           : #fff;
   box-shadow      : 0 3px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 /* width */
@@ -143,12 +145,19 @@
   #yt-container {
     width: 100%;
     border: 0;
+    background: white;
   }
   #video, #list {
     width: 100%;
   }
   #video {
-    overflow-y: visible;
+    height: 93vw;
+  }
+  #list {
+    position: absolute;
+    bottom: -93vw;
+    background: white;
+    border-top: 1px solid #777;
   }
   #player {
     height: 54vw;
@@ -164,7 +173,9 @@
     display: block;
   }
   #desc {
-    height: auto;
+    height: 35vw;
+    position: absolute;
+    overflow: scroll;
   }
   #yt-container {
     height: 1000px;

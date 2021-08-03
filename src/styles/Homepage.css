@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Signika:wght@600&display=swap');
 
 body {
-    background-image   : url(../images/background0.jpg);
+    background-image   : url(../images/background.jpg);
     background-position: top;
-    background-size    : 100vw;
+    background-size    : 25vw;
 }
 
 #container {
@@ -59,7 +59,7 @@ body {
     position  : sticky;
     top       : 0;
     text-align: center;
-    margin    : 0 auto 4vh;
+    margin    : 0 auto;
     height    : 9vh;
     background: linear-gradient(rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.88));
 }
@@ -190,7 +190,7 @@ body {
 
 #content {
     background-color: rgba(0, 0, 0, 0.6);
-    border-radius   : 6px;
+    border-radius   : 0 0 6px 6px;
     width           : 88%;
     padding         : 40px 0;
     margin          : 0 auto 8vh;
@@ -367,7 +367,7 @@ a {
 
 .null ::-webkit-scrollbar {
     width           : 30px;
-    background-image: url(../images/background0.jpg);
+    background-image: url(../images/background.jpg);
 }
 
 .null ::-webkit-scrollbar-track {

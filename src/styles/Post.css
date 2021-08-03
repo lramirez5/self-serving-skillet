@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+
 .post {
     width        : 88vw;
     text-align   : center;
@@ -21,6 +23,18 @@
     text-align: left;
     padding   : 28px 60px;
     background: rgba(0, 0, 0, .6);
+    font-family: 'PT Sans';
+}
+
+.post h3 {
+    margin: 0;
+    color: #bb9f00;
+}
+
+.post h4 {
+    margin: 18px 0 0;
+    line-height: .5rem;
+    color: lemonchiffon;
 }
 
 #carousel {
@@ -236,9 +250,9 @@
 
     .post h1 {
         border-radius: 12px 12px 0 0 ;
-        width        : 100%;
+        width        : 90%;
         margin       : 10px auto -16px;
-        padding      : 12px 0;
+        padding      : 12px 5%;
     }
 
     .dot {

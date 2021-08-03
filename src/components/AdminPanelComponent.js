@@ -436,7 +436,12 @@ export function AdminPanelComponent() {
                                     />
                                 </li>
                                 <li className="postInput">
-                                    <label>Add a body/description to your post: <br /><span style={{ fontSize: '6pt' }}>To create headers:<br/><strong style={{ color: 'black', fontSize: '10pt' }}>&lt;!</strong><em>Your heading text</em><strong style={{ color: 'black', fontSize: '10pt' }}>!&gt;</strong> or <br/><strong style={{ color: 'black', fontSize: '10pt' }}>&lt;*</strong><em>Your subheading text</em><strong style={{ color: 'black', fontSize: '10pt' }}>*&gt;</strong></span></label>
+                                    <label>Add a body/description to your post: <br />
+                                        <span style={{ fontSize: '6pt' }}>To create headers:<br />
+                                            <strong style={{ color: 'black', fontSize: '10pt' }}>&lt;!</strong><em>Your heading text</em><strong style={{ color: 'black', fontSize: '10pt' }}>!&gt;</strong> or <br />
+                                            <strong style={{ color: 'black', fontSize: '10pt' }}>&lt;*</strong><em>Your subheading text</em><strong style={{ color: 'black', fontSize: '10pt' }}>*&gt;</strong>
+                                        </span>
+                                    </label>
                                     <textarea
                                         id="create-desc"
                                         rows="6"
@@ -538,7 +543,7 @@ export function AdminPanelComponent() {
                                             {
                                                 console.log(post.tags)
                                             }
-                                            <p style={{textAlign: 'left', fontSize:'9pt', color:'gray', width: '95%',height:'auto'}} dangerouslySetInnerHTML={{__html: 'Tags: '+post.tags.toString().replaceAll(',',', ')}}></p>
+                                            <p style={{ textAlign: 'left', fontSize: '9pt', color: 'gray', width: '95%', height: 'auto' }} dangerouslySetInnerHTML={{ __html: 'Tags: ' + post.tags.toString().replaceAll(',', ', ') }}></p>
                                         </div>
                                     ))
                                 }

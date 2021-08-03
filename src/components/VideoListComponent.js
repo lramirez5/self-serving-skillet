@@ -13,7 +13,7 @@ export function VideoListComponent() {
         })
         .catch(error => {
           console.error(error);
-          setUpPlayer("");
+          setUpPlayer("AIzaSyC-GG2a3GYGKwZBWO0r8e5lMNbTiC2m2TE");
         });
     }
 
@@ -60,9 +60,10 @@ export function VideoListComponent() {
       }
 
       function mainVid(id, title, desc) {
+        console.log(desc)
         desc = urlify(desc);
         document.getElementById("player").innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"; allowfullscreen="true"; webkitallowfullscreen="true"; mozallowfullscreen="true"; id="myVid"></iframe>`;
-        document.getElementById("desc").innerHTML = `<h2>${title}</h2><p>${desc}</p>`;
+        document.getElementById("desc").innerHTML = `<h2>${title}</h2><p>${desc.replace(/\n/g, '<br/>')}</p>`;
       }
 
       function resultsLoop(data) {
@@ -80,7 +81,7 @@ export function VideoListComponent() {
             displayDesc = displayDesc[0].toUpperCase() + displayDesc.substring(1);
           }
           if (titlePieces[0].length > 40) {
-            titlePieces[0] = titlePieces[0].substring(0,40) + '...';
+            titlePieces[0] = titlePieces[0].substring(0, 40) + '...';
           }
 
           document.getElementById("vids").innerHTML += `
@@ -101,6 +102,7 @@ export function VideoListComponent() {
           var desc = item.getAttribute("data-desc");
           item.addEventListener('click', function () {
             mainVid(id, title, desc);
+            document.getElementById('player').scrollIntoView(true);
           });
         });
 

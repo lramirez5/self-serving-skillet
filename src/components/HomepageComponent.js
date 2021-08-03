@@ -75,15 +75,15 @@ export function HomepageComponent() {
                         <div id="more-panels">
                             <div id="theory-panel">
                                 <h1>Cooking Theory</h1>
-                                <p><Link to='/theory'>See updates <i className="arrow right"></i></Link></p>
+                                <p><Link to='/theory'>Turn ideas into something delicious <i className="arrow right"></i></Link></p>
                             </div>
                             <div id="technique-panel">
                                 <h1>Technique Tuesdays</h1>
-                                <p><Link to='/essentials'>Coming soon <i className="arrow right"></i></Link></p>
+                                <p><Link to='/essentials'>Hone your skills <i className="arrow right"></i></Link></p>
                             </div>
                             <div id="essentials-panel">
                                 <h1>Kitchen Essentials for Every Skill Level</h1>
-                                <p><Link to='/techniques'>Coming soon <i className="arrow right"></i></Link></p>
+                                <p><Link to='/techniques'>Find your next kitchen gadget <i className="arrow right"></i></Link></p>
                             </div>
                         </div>
                     </div>
