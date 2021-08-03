@@ -13,7 +13,7 @@ export function VideoListComponent() {
         })
         .catch(error => {
           console.error(error);
-          setUpPlayer("AIzaSyC-GG2a3GYGKwZBWO0r8e5lMNbTiC2m2TE");
+          setUpPlayer("");
         });
     }
 
