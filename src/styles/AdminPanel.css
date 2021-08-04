@@ -38,6 +38,11 @@
     overflow        : hidden;
 }
 
+.PostViewer {
+    background: rgb(255, 225, 201);
+
+}
+
 .PostViewer a {
     color: rgb(62, 107, 202);
 }

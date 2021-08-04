@@ -21,7 +21,7 @@ export function AdminPanelComponent() {
     //const [formData, setFormData] = useState(initialFormState);
     //const [updateData, setUpdateData] = useState(initialFormState);
 
-    useEffect(() => {
+    useEffect(async function() {
         var acc = document.getElementsByClassName("accordion");
         var i;
 
@@ -37,13 +37,16 @@ export function AdminPanelComponent() {
                 }
             });
         }
-        fetchPosts();
+        await fetchPosts();
         fetchImages();
 
         let scrollId = document.location.href.split('#');
         if (scrollId[1]) {
+            //console.log('Scrolling to '+scrollId[1])
             let el = document.getElementById(scrollId[1]);
             if (el) {
+                //console.log('Scrolled')
+                //console.log(el)
                 el.scrollIntoView(true);
                 window.scrollTo(window.scrollX, window.scrollY - 40);
             }
@@ -77,7 +80,7 @@ export function AdminPanelComponent() {
 
     async function createPost() {
         getFormData();
-        if (!newPostData.title || !newPostData.description) return;
+        if (!newPostData.title || !newPostData.description || !newPostData.category) return;
         await API.graphql({ query: createPostMutation, variables: { input: newPostData } });
         //if (newPostData.images !== '') {
         for (let i = 0; i < newPostData.images.length; i++) {
@@ -107,7 +110,7 @@ export function AdminPanelComponent() {
     async function updatePost() {
         var idUpdate = getUpdateData();
         if (idUpdate) {
-            if (!updatedPostData.title || !updatedPostData.description) return;
+            if (!updatedPostData.title || !updatedPostData.description || !updatedPostData.category) return;
             await API.graphql({ query: deletePostMutation, variables: { input: { id: idToDelete } } });
             const newPostsArray = posts.filter(post => post.id !== idToDelete);
             await API.graphql({ query: createPostMutation, variables: { input: updatedPostData } });
@@ -121,7 +124,7 @@ export function AdminPanelComponent() {
             setPosts([updatedPostData, ...newPostsArray]);
             closeUpdatePost();
         } else {
-            if (!updatedPostData.title || !updatedPostData.description) return;
+            if (!updatedPostData.title || !updatedPostData.description || !updatedPostData.category) return;
             updatedPostData.tags = updatedPostData.tags.filter((value, index) => updatedPostData.tags.indexOf(value) === index);
             await API.graphql({ query: updatePostMutation, variables: { input: updatedPostData } });
             if (updatedPostData.images) {
@@ -301,7 +304,7 @@ export function AdminPanelComponent() {
             }
         }
         //console.log(selected);
-        newPostData.tags = [...selected, ...document.getElementById("create-tags").value.split(",").map(item => item.replace(/[^A-Za-z0-9]/g, '').toLowerCase())];
+        newPostData.tags = [newPostData.id.replaceAll('-',''), ...selected, ...document.getElementById("create-tags").value.split(",").map(item => item.replace(/[^A-Za-z0-9]/g, '').toLowerCase())];
     }
 
     function clearFormData() {
@@ -335,7 +338,7 @@ export function AdminPanelComponent() {
             }
         }
         //console.log(selected);
-        updatedPostData.tags = [...selected, ...document.getElementById("up-tags").value.split(",").map(item => item.replace(/[^A-Za-z0-9]/g, '').toLowerCase())];
+        updatedPostData.tags = [updatedPostData.id.replaceAll('-',''), ...selected, ...document.getElementById("up-tags").value.split(",").map(item => item.replace(/[^A-Za-z0-9]/g, '').toLowerCase())];
         return isIdUpdated;
     }
 
@@ -419,13 +422,12 @@ export function AdminPanelComponent() {
                             <ul className="flex-outer">
                                 <li className="postInput">
                                     <label>Select the category of your post:<br /><span style={{ fontSize: '8pt' }}>(hold 'ctrl' to select multiple)</span></label>
-                                    <select id="create-category" multiple >
+                                    <select id="create-category" defaultValue={[""]} multiple >
                                         <option value="foodrecipe">Food Recipe</option>
                                         <option value="drinkrecipe">Drink Recipe</option>
                                         <option value="theory">Cooking Theory</option>
                                         <option value="essentials">Kitchen Essentials</option>
                                         <option value="technique">Technique</option>
-                                        <option value="">None (not recommended)</option>
                                     </select>
                                 </li>
                                 <li className="postInput">
@@ -511,7 +513,7 @@ export function AdminPanelComponent() {
 
                     <div>
                         <div className="PostViewer" >
-                            <div style={{ marginBottom: 30, background: 'white' }}>
+                            <div style={{ marginBottom: 30 }}>
                                 <h1 style={{ background: '#cccccc' }}>My Posts</h1>
                                 <p style={{ borderBottom: '2px solid black', paddingBottom: '12px' }}>Want to jump to a specific post? Go to <strong>www.selfservingskillet.com/admin#&lt;&lt;post-title&gt;&gt;</strong> <br />
                                     Example: To update the post at www.selfservingskillet.com/recipes/<strong>carbonara-and-cake</strong>, go to www.selfservingskillet.com/admin<strong>#carbonara-and-cake</strong> </p>
@@ -519,6 +521,7 @@ export function AdminPanelComponent() {
                                     posts.map(post => (
                                         <div key={post.id || post.title} id={post.id} style={{ borderBottom: '2px solid black', padding: '24px' }}>
                                             <h2>{post.title}</h2>
+                                            <p><a href={`/view/${post.id}`} target='_blank' rel='noreferrer'>See post</a></p>
                                             <button style={{ margin: '0 3px' }} onClick={() => deletePost(post)}>Delete post</button>
                                             <button style={{ margin: '0 3px' }} onClick={() => showUpdatePost(post)}>Update post</button>
                                             <p className="post-desc-p" style={{ textAlign: 'left', fontSize: '10pt' }} dangerouslySetInnerHTML={{ __html: post.description }}></p>
@@ -540,9 +543,6 @@ export function AdminPanelComponent() {
                                                     ))
                                                 }
                                             </div>
-                                            {
-                                                console.log(post.tags)
-                                            }
                                             <p style={{ textAlign: 'left', fontSize: '9pt', color: 'gray', width: '95%', height: 'auto' }} dangerouslySetInnerHTML={{ __html: 'Tags: ' + post.tags.toString().replaceAll(',', ', ') }}></p>
                                         </div>
                                     ))

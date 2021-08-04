@@ -151,13 +151,17 @@
     width: 100%;
   }
   #video {
-    height: 93vw;
+    height: auto;
+    border: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
   #list {
-    position: absolute;
-    bottom: -93vw;
+    margin-top: -16px;
+    padding-top: 4px;
     background: white;
     border-top: 1px solid #777;
+    height: 42vh;
   }
   #player {
     height: 54vw;
@@ -173,14 +177,10 @@
     display: block;
   }
   #desc {
-    height: 35vw;
-    position: absolute;
+    height: 25vh;
     overflow: scroll;
-  }
-  #yt-container {
-    height: 1000px;
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
   .details {
     height: auto;

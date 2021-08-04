@@ -14,9 +14,6 @@ function App() {
     <Router>
       <Switch>
         <Route path="/" exact>
-          <Placeholder />
-        </Route>
-        <Route path="/temp" exact>
           <HomepageComponent />
         </Route>
         <Route path="/admin" exact>

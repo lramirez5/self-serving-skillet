@@ -13,7 +13,7 @@ export function VideoListComponent() {
         })
         .catch(error => {
           console.error(error);
-          setUpPlayer("AIzaSyC-GG2a3GYGKwZBWO0r8e5lMNbTiC2m2TE");
+          setUpPlayer("");
         });
     }
 
@@ -103,6 +103,7 @@ export function VideoListComponent() {
           item.addEventListener('click', function () {
             mainVid(id, title, desc);
             document.getElementById('player').scrollIntoView(true);
+            document.getElementById('desc').scrollTop = 0;
           });
         });
 

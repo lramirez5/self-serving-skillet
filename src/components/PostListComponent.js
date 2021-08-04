@@ -77,6 +77,11 @@ export function PostListComponent() {
         //console.log(postsFromAPI);
         setPosts(postsFromAPI);
         setUnfilteredPosts(postsFromAPI);
+        if(postsFromAPI.length !== 0) {
+            document.getElementById('contact-suggestion').style.display = 'none'
+        } else {
+            document.getElementById('contact-suggestion').style.display = 'block'
+        }
     }
 
     useEffect(() => {
@@ -96,7 +101,7 @@ export function PostListComponent() {
         var field = document.createElement('input');
         field.setAttribute('type', 'text');
         document.body.appendChild(field);
-        
+
         field.style.height = '1px'
         field.style.width = '1px'
         field.style.position = 'absolute';
@@ -110,14 +115,14 @@ export function PostListComponent() {
                 //window.scrollTo(0,0);
             }, 10);
         }, 10);
-        
+
     }
 
     function filterBySearch() {
         //console.log('searchterm: ' + searchterm)
         setPosts([])
         if (searchterm !== '') {
-            const newPostsArray = unfilteredPosts.filter(post => post.tags.some(tag => tag.includes(searchterm.toLocaleLowerCase().replace(/[^a-z0-9]/g, ''))));
+            const newPostsArray = unfilteredPosts.filter(post => post.tags.some(tag => tag.includes(searchterm.toLowerCase().replace(/[^a-z0-9]/g, ''))));
             document.getElementById("search-term").innerHTML = `Showing results for "${searchterm}" (${newPostsArray.length} posts found)`;
             document.getElementById("search-info").style.display = 'inline';
             //console.log(newPostsArray)
@@ -136,7 +141,49 @@ export function PostListComponent() {
 
     function setPostsByFilter(postArray) {
         //console.log('searchfilter: ' + searchfilter)
-        if (searchfilter === "old") {
+        if(postArray.length !== 0) {
+            document.getElementById('contact-suggestion').style.display = 'none'
+        } else {
+            document.getElementById('contact-suggestion').style.display = 'block'
+        }
+        if (searchfilter === 'rel') {
+            if (searchterm === '') {
+                setPosts([...postArray])
+            } else {
+                let term = searchterm.toLowerCase().replace(/[^a-z0-9]/g, '');
+                let relArray = [];
+                /*postArray.forEach(post => {
+                    if(post.tags[0].includes(term)) relArray.push(post)
+                })*/
+                let i = 0;
+                while (i < postArray.length) {
+                    if (postArray[i].tags[0].includes(term)) {
+                        relArray.push(...postArray.splice(i, 1))
+                    } else {
+                        i += 1
+                    }
+                }
+                function compare(a, b) {
+                    if (a.tags[0].indexOf(term) < b.tags[0].indexOf(term)) {
+                        return -1;
+                    }
+                    if (a.tags[0].indexOf(term) > b.tags[0].indexOf(term)) {
+                        return 1;
+                    }
+                    return 0;
+                }
+                relArray.sort(compare)
+                i = 0;
+                while (i < postArray.length) {
+                    if (postArray[i].tags.includes(term)) {
+                        relArray.push(...postArray.splice(i, 1))
+                    } else {
+                        i += 1
+                    }
+                }
+                setPosts([...relArray, ...postArray])
+            }
+        } else if (searchfilter === "old") {
             setPosts([...postArray].reverse())
         } else if (searchfilter === "abc") {
             function compare(a, b) {
@@ -165,7 +212,8 @@ export function PostListComponent() {
                 <div id="filter-info">
                     <div id="search-info"><span id="search-term"></span><button onClick={() => clearSearch()}>Clear &times;</button></div>
                     <div id="filter-options">Sort by:
-                        <select id="filter" defaultValue="new" onChange={e => setSearchFilter(e.target.value)}>
+                        <select id="filter" defaultValue="rel" onChange={e => setSearchFilter(e.target.value)}>
+                            <option value="rel">Relevance</option>
                             <option value="new">Date (newest)</option>
                             <option value="old">Date (oldest)</option>
                             <option value="abc">A - Z</option>
@@ -176,7 +224,7 @@ export function PostListComponent() {
             <div id="list-container" style={{ marginBottom: 30 }}>
                 {
                     posts.map(post => (
-                        <Link to={"/recipes/" + post.id} key={post.id || post.title} >
+                        <Link to={`/${cat}/${post.id}`} key={post.id || post.title} >
                             <div data-key={post.id} className="post-preview" >
                                 <article className="preview-content">
                                     {
@@ -188,7 +236,7 @@ export function PostListComponent() {
                                     }
                                     <div>
                                         <h2>{post.title}</h2>
-                                        <p>{post.description.replace(/<br ?\/>/g, '\n').split('.')[0].substring(0, 255) + '...'}</p>
+                                        <p>{post.description.replace(/<br ?\/>/g, '\n').replace(/<h3>/g, '').replace(/<h4>/g, '').replace(/<\/h3>/g, '').replace(/<\/h4>/g, '').split('.')[0].split('\n')[0].substring(0, 255) + '...'}</p>
                                     </div>
                                 </article>
                             </div>
@@ -196,7 +244,10 @@ export function PostListComponent() {
                     ))
                 }
             </div>
-
+            <div id='contact-suggestion'>
+                <h4>Not finding what your looking for?</h4>
+                <p>Let me know by leaving a suggestion <Link to='/contact'>here</Link>.</p>
+            </div>
         </div>
     )
 
