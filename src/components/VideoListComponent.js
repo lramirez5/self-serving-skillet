@@ -13,7 +13,7 @@ export function VideoListComponent() {
         })
         .catch(error => {
           console.error(error);
-          setUpPlayer("AIzaSyAakUeb374Bjju3Z2H3BuKF2TWOR2Gre48");
+          setUpPlayer("AIzaSyCrofiYnw4jCSe_rIOdQUg37HgwKdXUjuw");
         });
     }
 

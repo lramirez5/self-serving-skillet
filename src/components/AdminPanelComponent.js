@@ -292,7 +292,7 @@ export function AdminPanelComponent() {
     }
 
     function getFormData() {
-        newPostData.id = document.getElementById("create-title").value.toLowerCase().trim().replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, '-');
+        newPostData.id = document.getElementById("create-title").value.toLowerCase().trim().replace(/[^A-Za-z0-9 ]/g, ' ').replace(/\s+/g, '-');
         newPostData.category = document.getElementById("create-category").value;
         newPostData.title = document.getElementById("create-title").value;
         newPostData.description = urlify(document.getElementById("create-desc").value.replace(/<!/g, '<h3>').replace(/!>/g, '</h3>').replace(/<\*/g, '<h4>').replace(/\*>/g, '</h4>')).replace(/\n/g, '<br/>');

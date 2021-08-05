@@ -14,6 +14,17 @@ export function HomepageComponent() {
     useEffect(() => {
         window.addEventListener('scroll', handleHomepageScroll);
         fetchImages();
+        const script = document.createElement('script');
+
+        script.src = "https://apis.google.com/js/platform.js";
+        script.async = true;
+
+        document.body.appendChild(script);
+        document.getElementById("sub-btn").innerHTML = `<div class="g-ytsubscribe" data-channelid="UCb8xPiMtYUox6rk4ONjSCdg" data-layout="default" data-count="default"></div>`
+
+        return () => {
+            document.body.removeChild(script);
+        }
     }, []);
 
     async function fetchImages() {
@@ -27,11 +38,15 @@ export function HomepageComponent() {
         //setBackground([background]);
     }
 
+    function scrollDownToVids() {
+        document.getElementById('player').scrollIntoView({behavior:'smooth'})
+    }
+
     return (
         <div>
             <div id="container">
                 <div id="home-head">
-                    <h1>Self Serving Skillet</h1>
+                    <h1 id="site-title">Self Serving Skillet</h1>
                     <h4>Exploring the philosophy and technique of feeding yourself.</h4>
                 </div>
                 <div id="home-menu">
@@ -87,7 +102,15 @@ export function HomepageComponent() {
                             </div>
                         </div>
                     </div>
+                    <div id="vid-list-header" onClick={() => scrollDownToVids()}>
+                        <h2>Check out Self Serving Skillet videos and Subscribe <span id='sub-btn'></span></h2>
+                        <div id='left-head-arrow'></div>
+                        <div id='right-head-arrow'></div>
+                        <div id='left2-head-arrow'></div>
+                        <div id='right2-head-arrow'></div>
+                    </div>
                 </div>
+
             </div>
             <VideoListComponent />
         </div>

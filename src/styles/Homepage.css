@@ -190,9 +190,8 @@ body {
 
 #content {
     background-color: rgba(0, 0, 0, 0.6);
-    border-radius   : 0 0 6px 6px;
     width           : 88%;
-    padding         : 40px 0;
+    padding         : 40px 0 0;
     margin          : 0 auto 8vh;
 }
 
@@ -360,6 +359,97 @@ a {
     margin          : auto;
 }
 
+#vid-list-header {
+    background: rgba(0, 0, 0, 0.6);
+    margin: 9vh auto -20px;
+    text-align: center;
+    color: lemonchiffon;
+    width: 100%;
+    height: auto;
+    position: relative;
+    cursor: pointer;
+}
+
+#vid-list-header h2 {
+    padding: 4vh 12px 5vh;
+}
+
+#vid-list-header:hover h2 {
+    color: #bb9f00;
+}
+
+#left-head-arrow {
+    border-bottom: 1px solid azure;
+    padding: 1px;
+    width: 15%;
+    position: absolute;
+    right: 49.95%;
+    bottom: 10px;
+    transform: rotate(5deg);
+    transform-origin: right;
+}
+
+#right-head-arrow {
+    border-bottom: 1px solid azure;
+    padding: 1px;
+    width: 15%;
+    position: absolute;
+    left: 49.95%;
+    bottom: 10px;
+    transform: rotate(-5deg);
+    transform-origin: left;
+}
+
+#vid-list-header:hover #left-head-arrow {
+    transform: translateY(6px) rotate(5deg);
+    width: 20%;
+    border-color: lemonchiffon;
+    transition: width .2s ease-in-out, transform .2s;
+}
+
+#vid-list-header:hover #right-head-arrow {
+    transform: translateY(6px) rotate(-5deg);
+    width: 20%; 
+    border-color: lemonchiffon;   
+    transition: width .2s ease-in-out, transform .2s;
+}
+
+#left2-head-arrow {
+    border-bottom: 1px solid transparent;
+    padding: 1px;
+    width: 0%;
+    position: absolute;
+    right: 49.95%;
+    bottom: 20px;
+    transform: rotate(5deg);
+    transform-origin: right;
+}
+
+#right2-head-arrow {
+    border-bottom: 1px solid transparent;
+    padding: 1px;
+    width: 0%;
+    position: absolute;
+    left: 49.95%;
+    bottom: 20px;
+    transform: rotate(-5deg);
+    transform-origin: left;
+}
+
+#vid-list-header:hover #left2-head-arrow {
+    transform: translateY(6px) rotate(5deg);
+    width: 12%;
+    border-color: lemonchiffon;
+    transition: width .2s ease-in-out;
+}
+
+#vid-list-header:hover #right2-head-arrow {
+    transform: translateY(6px) rotate(-5deg);
+    width: 12%; 
+    border-color: lemonchiffon;   
+    transition: width .2s ease-in-out;
+}
+
 @font-face {
     font-family: headFont;
     src        : url(https://fonts.googleapis.com/css2?family=Signika:wght@600&display=swap);
@@ -509,6 +599,7 @@ a {
 
     #home-menu #logo #menu-title {
         font-size     : 2.8vw;
+        padding-right: 8vw;
     }
 }
 
