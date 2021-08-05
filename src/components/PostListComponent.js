@@ -56,7 +56,7 @@ export function PostListComponent() {
         });
         el.value = '';
         setSearchTerm('')
-        setSearchFilter('new');
+        setSearchFilter('rel');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cat]);
 
@@ -150,15 +150,17 @@ export function PostListComponent() {
             if (searchterm === '') {
                 setPosts([...postArray])
             } else {
-                let term = searchterm.toLowerCase().replace(/[^a-z0-9]/g, '');
-                let relArray = [];
+                let term = searchterm.toLowerCase().replace(/[^a-z0-9]/g, '')
+                //console.log("TERM: "+term)
+                let relArray = []
+                let postsCopy = postArray.slice(0)
                 /*postArray.forEach(post => {
                     if(post.tags[0].includes(term)) relArray.push(post)
                 })*/
                 let i = 0;
-                while (i < postArray.length) {
-                    if (postArray[i].tags[0].includes(term)) {
-                        relArray.push(...postArray.splice(i, 1))
+                while (i < postsCopy.length) {
+                    if (postsCopy[i].tags[0].includes(term)) {
+                        relArray.push(...postsCopy.splice(i, 1))
                     } else {
                         i += 1
                     }
@@ -173,15 +175,19 @@ export function PostListComponent() {
                     return 0;
                 }
                 relArray.sort(compare)
+                //console.log("TERM IN TITLE")
+                //console.log(relArray)
                 i = 0;
-                while (i < postArray.length) {
-                    if (postArray[i].tags.includes(term)) {
-                        relArray.push(...postArray.splice(i, 1))
+                while (i < postsCopy.length) {
+                    if (postsCopy[i].tags.includes(term)) {
+                        relArray.push(...postsCopy.splice(i, 1))
                     } else {
                         i += 1
                     }
                 }
-                setPosts([...relArray, ...postArray])
+                //console.log("SORTED")
+                //console.log([...relArray, ...postsCopy])
+                setPosts([...relArray, ...postsCopy])
             }
         } else if (searchfilter === "old") {
             setPosts([...postArray].reverse())

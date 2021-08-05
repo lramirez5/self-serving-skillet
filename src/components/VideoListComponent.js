@@ -13,7 +13,7 @@ export function VideoListComponent() {
         })
         .catch(error => {
           console.error(error);
-          setUpPlayer("");
+          setUpPlayer("AIzaSyAakUeb374Bjju3Z2H3BuKF2TWOR2Gre48");
         });
     }
 
@@ -60,7 +60,7 @@ export function VideoListComponent() {
       }
 
       function mainVid(id, title, desc) {
-        console.log(desc)
+        //console.log(desc)
         desc = urlify(desc);
         document.getElementById("player").innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"; allowfullscreen="true"; webkitallowfullscreen="true"; mozallowfullscreen="true"; id="myVid"></iframe>`;
         document.getElementById("desc").innerHTML = `<h2>${title}</h2><p>${desc.replace(/\n/g, '<br/>')}</p>`;
@@ -148,17 +148,26 @@ export function VideoListComponent() {
 
   }, []);
 
+  function scrollVidList() {
+    document.getElementById("yt-container").scrollIntoView(true);
+    document.getElementById('desc').scrollTop = 0;
+  }
+
   return (
     <div id="yt-container">
       <div id="video">
         <div id="player"></div>
         <div id="player-buffer"></div>
         <div id="desc"></div>
+        <div id="btn-cont">
+          <button id="list-top" onClick={() => {scrollVidList()}}>&uarr;</button>
+        </div>
+        <div id="list">
+          <div id="vids"></div>
+          <button id="load" disabled>Load More</button>
+        </div>
       </div>
-      <div id="list">
-        <div id="vids"></div>
-        <button id="load" disabled>Load More</button>
-      </div>
+
     </div>
   )
 }

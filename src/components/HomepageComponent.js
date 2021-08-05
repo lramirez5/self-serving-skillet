@@ -67,8 +67,8 @@ export function HomepageComponent() {
                             <p>Whether as simple as opening a bottle, or as complex as opening several, a well paired beverage will heighten any meal.<br /><br /></p>
                             <p><Link to="/drinks">Explore recipes <i className="arrow right"></i></Link></p>
                         </div>
-                        <img src={images[0]} alt="Tasty food." />
-                        <img src={images[1]} alt="Delicious drink." />
+                        <img src={images[0]} id="foodimg" alt="Tasty food." />
+                        <img src={images[1]} id="drinkimg" alt="Delicious drink." />
                     </div>
                     <div id="subcontent2">
                         <img src={board} alt="A cutting board." />

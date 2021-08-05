@@ -11,7 +11,7 @@ body {
     width        : 100%;
     height       : auto;
     margin       : auto;
-    margin-bottom: -40px;
+    margin-bottom: -9vh;
 }
 
 #home-head {
@@ -404,6 +404,7 @@ a {
 
     #content {
         width: 100%;
+        margin: 0 0 9vh;
     }
 
     #subcontent1 h1 {
@@ -430,19 +431,32 @@ a {
     }
 
     #food-panel {
-        bottom: 35vh;
-        right : 51%;
+        right : 55%;
+        bottom: 50vh;
     }
 
     #drink-panel {
-        left: 51%;
+        bottom: 5vh;
+        left: 55%;
+    }
+
+    #subcontent1 {
+        width         : 100%;
+        overflow      : hidden;
+        margin        : 0;
+        padding: 0 0 14px;
+        display       : flex;
+        flex-direction: column;
     }
 
     #subcontent1 img {
-        width   : 100vw;
-        float   : left;
-        position: relative;
-        left    : -5vw;
+        flex-grow      : 1;
+        margin-left: 0;
+        padding        : 0;
+        width          : 100%;
+        height         : 45vh;
+        object-fit     : cover;
+        object-position: 50% 50%;
     }
 
     #food-panel .right-down,
@@ -461,6 +475,7 @@ a {
 
     #subcontent2 {
         overflow: hidden;
+        width: 100%;
     }
 
     #subcontent2 img {
@@ -472,6 +487,25 @@ a {
         object-position : 50% 86%;
     }
 
+    #home-menu .std-btn,
+    #more-btn,
+    .dropdown-content {
+        font-size: 2.6vw;
+    }
+
+    #home-menu .std-btn,
+    #home-menu .drop-btn {
+        width  : 12vw;
+    }
+
+    .dropdown-content {
+        width           : 24vw;
+        max-width       : 24vw;
+    }
+
+    #home-menu #logo #menu-title {
+        font-size     : 2.8vw;
+    }
 }
 
 @media screen and (min-width: 800px) {

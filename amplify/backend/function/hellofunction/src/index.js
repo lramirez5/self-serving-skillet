@@ -13,6 +13,6 @@ exports.handler = async (event) => {
     //  }, 
         body: JSON.stringify(secret.SecretString),
     };
-    console.log(secret);
+    //console.log(secret);
     return response;
 };
