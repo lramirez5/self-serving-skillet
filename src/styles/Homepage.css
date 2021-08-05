@@ -473,6 +473,10 @@ a {
         font-size: 20pt;
     }
 
+    #more-panels p {
+        width: 88%;
+    }
+
     #subcontent2 {
         overflow: hidden;
         width: 100%;
