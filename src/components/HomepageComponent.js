@@ -66,7 +66,7 @@ export function HomepageComponent() {
                                 <Link to='/techniques'>Technique Tues.</Link>
                             </div>
                         </div>
-                        <button className="std-btn" tabIndex='-1' id="contact-btn" onClick={function () { alert("Coming Soon") }}>Contact</button>
+                        <button className="std-btn" tabIndex='-1' id="contact-btn"><Link to='/contact'>Contact</Link></button>
                     </div>
                 </div>
                 <div id="content">

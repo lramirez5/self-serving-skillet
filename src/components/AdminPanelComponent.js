@@ -21,7 +21,7 @@ export function AdminPanelComponent() {
     //const [formData, setFormData] = useState(initialFormState);
     //const [updateData, setUpdateData] = useState(initialFormState);
 
-    useEffect(async function() {
+    useEffect(async function () {
         var acc = document.getElementsByClassName("accordion");
         var i;
 
@@ -296,7 +296,12 @@ export function AdminPanelComponent() {
         newPostData.category = document.getElementById("create-category").value;
         newPostData.title = document.getElementById("create-title").value;
         newPostData.description = urlify(document.getElementById("create-desc").value.replace(/<!/g, '<h3>').replace(/!>/g, '</h3>').replace(/<\*/g, '<h4>').replace(/\*>/g, '</h4>')).replace(/\n/g, '<br/>');
-        newPostData.video = document.getElementById("create-video").value.split("v=").slice(-1)[0];
+        let videoVal = document.getElementById("create-video").value;
+        if (videoVal.includes('studio')) {
+            newPostData.video = videoVal.split('video/')[1].split('/')[0]
+        } else {
+            newPostData.video = videoVal.split("v=").slice(-1)[0];
+        }
         var selected = [];
         for (var option of document.getElementById('create-category').options) {
             if (option.selected) {
@@ -304,7 +309,7 @@ export function AdminPanelComponent() {
             }
         }
         //console.log(selected);
-        newPostData.tags = [newPostData.id.replaceAll('-',''), ...selected, ...document.getElementById("create-tags").value.split(",").map(item => item.replace(/[^A-Za-z0-9]/g, '').toLowerCase())];
+        newPostData.tags = [newPostData.id.replaceAll('-', ''), ...selected, ...document.getElementById("create-tags").value.split(",").map(item => item.replace(/[^A-Za-z0-9]/g, '').toLowerCase())];
     }
 
     function clearFormData() {
@@ -330,7 +335,12 @@ export function AdminPanelComponent() {
         updatedPostData.category = document.getElementById("up-category").value;
         updatedPostData.title = document.getElementById("up-title").value;
         updatedPostData.description = urlify(document.getElementById("up-desc").value.replace(/<!/g, '<h3>').replace(/!>/g, '</h3>').replace(/<\*/g, '<h4>').replace(/\*>/g, '</h4>')).replace(/\n/g, '<br/>');
-        updatedPostData.video = document.getElementById("up-video").value.split("v=").slice(-1)[0];
+        let videoVal = document.getElementById("up-video").value
+        if (videoVal.includes('studio')) {
+            updatedPostData.video = videoVal.split('video/')[1].split('/')[0]
+        } else {
+            updatedPostData.video = videoVal.split("v=").slice(-1)[0];
+        }
         var selected = [];
         for (var option of document.getElementById('up-category').options) {
             if (option.selected) {
@@ -338,7 +348,7 @@ export function AdminPanelComponent() {
             }
         }
         //console.log(selected);
-        updatedPostData.tags = [updatedPostData.id.replaceAll('-',''), ...selected, ...document.getElementById("up-tags").value.split(",").map(item => item.replace(/[^A-Za-z0-9]/g, '').toLowerCase())];
+        updatedPostData.tags = [updatedPostData.id.replaceAll('-', ''), ...selected, ...document.getElementById("up-tags").value.split(",").map(item => item.replace(/[^A-Za-z0-9]/g, '').toLowerCase())];
         return isIdUpdated;
     }
 

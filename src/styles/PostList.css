@@ -278,8 +278,15 @@
         height : 12vh;
     }
 
+    .preview-content div h2 {
+        font-size: 16px;
+    }
+
     .preview-content div p {
         margin-top: 0;
+        font-size: 12px;
+        line-height: normal;
+        max-height: 64px;
     }
 
     .post-preview img {

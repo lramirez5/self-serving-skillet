@@ -14,6 +14,17 @@ export function PostComponent() {
 
     useEffect(() => {
         fetchPost();
+        const script = document.createElement('script');
+
+        script.src = "https://apis.google.com/js/platform.js";
+        script.async = true;
+
+        document.body.appendChild(script);
+        document.getElementById("post-sub-btn").innerHTML = `<div class="g-ytsubscribe" data-channelid="UCb8xPiMtYUox6rk4ONjSCdg" data-layout="full" data-count="default"></div>`
+
+        return () => {
+            document.body.removeChild(script);
+        }
         //setCarousel();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -229,6 +240,7 @@ export function PostComponent() {
                     <div id="right-shadow"></div>
                 </div>
                 <div id="dots" style={{ textAlign: 'center', marginTop: '12px' }}></div>
+                <div id="post-sub-btn"></div>
                 <h1>{post.title}</h1>
                 <p id="post-desc"></p>
             </div>

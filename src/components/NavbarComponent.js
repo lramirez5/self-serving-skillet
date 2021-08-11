@@ -21,7 +21,7 @@ export function NavbarComponent() {
                             <Link to='/techniques'>Technique Tues.</Link>
                         </div>
                     </div>
-                    <button className="nav-std-btn" tabIndex='-1' id="nav-contact-btn" onClick={function () { alert("Coming Soon") }}>Contact</button>
+                    <button className="nav-std-btn" tabIndex='-1' id="nav-contact-btn"><Link to='/contact'>Contact</Link></button>
                 </div>
             </div>
             <div id="nav-buffer"></div>

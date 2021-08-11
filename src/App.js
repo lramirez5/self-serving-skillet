@@ -8,6 +8,7 @@ import { VideoListComponent } from './components/VideoListComponent';
 import { PostComponent } from './components/PostComponent';
 import { Error } from './components/Error';
 import { PostListComponent } from './components/PostListComponent';
+import { ContactComponent } from './components/ContactComponent';
 
 function App() {
   return (
@@ -22,13 +23,17 @@ function App() {
         <Route path="/player" exact>
           <VideoListComponent />
         </Route>
-        <Route exact path="/Content-Not-Found" component={Error} />
-        <Route exact path="/:cat">
-          <PostListComponent />
+        <Route path="/contact" exact>
+          <ContactComponent />
         </Route>
-        <Route path="/:cat/:id">
+        <Route exact path="/Content-Not-Found" component={Error} />
+        <Route exact path="/view/:id">
           <PostComponent />
         </Route>
+        <Route path="/:cat">
+          <PostListComponent />
+        </Route>
+        
       </Switch>
     </Router>
   );

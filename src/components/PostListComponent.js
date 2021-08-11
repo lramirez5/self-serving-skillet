@@ -230,7 +230,7 @@ export function PostListComponent() {
             <div id="list-container" style={{ marginBottom: 30 }}>
                 {
                     posts.map(post => (
-                        <Link to={`/${cat}/${post.id}`} key={post.id || post.title} >
+                        <Link to={`/view/${post.id}`} key={post.id || post.title} >
                             <div data-key={post.id} className="post-preview" >
                                 <article className="preview-content">
                                     {
@@ -242,7 +242,7 @@ export function PostListComponent() {
                                     }
                                     <div>
                                         <h2>{post.title}</h2>
-                                        <p>{post.description.replace(/<br ?\/>/g, '\n').replace(/<h3>/g, '').replace(/<h4>/g, '').replace(/<\/h3>/g, '').replace(/<\/h4>/g, '').split('.')[0].split('\n')[0].substring(0, 255) + '...'}</p>
+                                        <p>{post.description.substring(0, 255).replace(/<br ?\/>/g, '\n').replace(/<a.*?>/g, '').replace(/<\/a>/g, '').replace(/<h3>/g, '').replace(/<h4>/g, '').replace(/<\/h3>/g, '').replace(/<\/h4>/g, '').split('.')[0].split(/[.!? ]\n/g)[0] + '...'}</p>
                                     </div>
                                 </article>
                             </div>

@@ -221,6 +221,14 @@
     border-left: 12px solid #bb9f00;
 }
 
+#post-sub-btn {
+    position: fixed;
+    bottom: 4px;
+    right: 4px;
+    background: rgba(255,255,255,.8);
+    padding: 8px;
+}
+
 @media screen and (max-width: 800px) {
     .post {
         width: 100%;
