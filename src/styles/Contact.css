@@ -1,6 +1,86 @@
 #contact-form {
-    background: rgba(0,0,0,.6);
-    color: lemonchiffon;
-    padding: 12px;
-    margin-top: 15vh;
+    background: rgba(0, 0, 0, .6);
+    color     : lemonchiffon;
+    padding   : 12px;
+    margin-top: 5vh;
+}
+
+#form-content {
+    text-align: left;
+    width     : 60vw;
+    margin    : auto;
+}
+
+#form-content #identity {
+    margin        : auto;
+    display       : flex;
+    flex-direction: row;
+    align-items   : center;
+}
+
+#form-content #identity #name-in {
+    flex        : 1;
+    text-align  : left;
+    margin-left : 12px;
+    margin-right: 12px;
+}
+
+#form-content #identity #email-in {
+    flex        : 1;
+    text-align  : left;
+    margin-left : 12px;
+    margin-right: 12px;
+}
+
+#form-content #identity input {
+    width        : 100%;
+    height       : 24px;
+    padding      : 4px;
+    border-radius: 6px;
+}
+
+#form-content textarea {
+    width        : 100%;
+    max-width    : 100%;
+    min-width    : 100%;
+    margin-top   : 8px;
+    margin-left: -10px;
+    padding      : 10px;
+    border-radius: 6px;
+}
+
+#submit-btn {
+    text-align: right;
+    width     : 100%;
+}
+
+#submit-btn input {
+    padding      : 8px;
+    border-radius: 8px;
+}
+
+#submit-btn input:hover {
+    background: #ccc;
+    cursor    : pointer;
+}
+
+#submit-btn input:active {
+    background: #aaa;
+    color     : lemonchiffon;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity       : 0.3;
+}
+
+#codelabel,
+#codeinput {
+    display: none;
+}
+
+@media screen and (max-width: 800px) {
+    #form-content {
+        width: 85vw;
+    }
 }
