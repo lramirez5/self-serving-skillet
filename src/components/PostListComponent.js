@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { API, Storage } from 'aws-amplify';
-import { categoryByDate, postsByDate } from '../graphql/queries';
+import { postsByDate } from '../graphql/queries';
 import '../styles/PostList.css';
 import { NavbarComponent } from './NavbarComponent';
 
@@ -42,6 +42,7 @@ export function PostListComponent() {
 
     useEffect(() => {
         fetchPosts();
+        document.getElementById("filter").value = "rel";
         window.scrollTo(0, 0);
         var old_element = document.getElementById("search-input");
         var new_element = old_element.cloneNode(true);
@@ -242,7 +243,7 @@ export function PostListComponent() {
                                     }
                                     <div>
                                         <h2>{post.title}</h2>
-                                        <p>{post.description.substring(0, 255).replace(/<br ?\/>/g, '\n').replace(/<a.*?>/g, '').replace(/<\/a>/g, '').replace(/<h3>/g, '').replace(/<h4>/g, '').replace(/<\/h3>/g, '').replace(/<\/h4>/g, '').split('.')[0].split(/[.!? ]\n/g)[0] + '...'}</p>
+                                        <p>{post.description.substring(0, 70).replace(/<br ?\/>/g, '\n').replace(/<a.*?>/g, '').replace(/<\/a>/g, '').replace(/<h3>/g, '').replace(/<h4>/g, '').replace(/<\/h3>/g, '').replace(/<\/h4>/g, '').split('.')[0].split(/[.!? ]\n/g)[0] + '...'}</p>
                                     </div>
                                 </article>
                             </div>

@@ -18,7 +18,7 @@ export function NavbarComponent() {
                         <div id="nav-dropdown" className="nav-dropdown-content">
                             <Link to='/theory'>Cooking Theory</Link>
                             <Link to='/essentials'>Kitchen Essentials</Link>
-                            <Link to='/techniques'>Technique Tues.</Link>
+                            <Link to='/techniques'>Technique Tuesdays</Link>
                         </div>
                     </div>
                     <button className="nav-std-btn" tabIndex='-1' id="nav-contact-btn"><Link to='/contact'>Contact</Link></button>

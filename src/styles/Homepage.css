@@ -134,25 +134,14 @@ body {
     font-family: 'Signika';
     font-size  : 1.6vw;
     color      : rgb(214, 214, 214);
+    
+    border-left: 1px solid transparent;
+    border-image: linear-gradient(rgba(255,255,255, 0), rgba(255,255,255, 1), rgba(255,255,255, 0)) 2;
 }
 
 #home-menu .std-btn:hover {
-    border-left  : 1px solid black;
-    border-right : 1px solid black;
-    border-top   : 0;
-    border-bottom: 0;
-    border-style : inset;
     background   : rgba(212, 212, 212, 0.4);
     cursor       : pointer;
-}
-
-#more-btn:hover,
-#more-btn:active {
-    border-left  : 1px solid black;
-    border-right : 1px solid black;
-    border-top   : 0;
-    border-bottom: 0;
-    border-style : inset;
 }
 
 #menu-more:hover {
@@ -166,7 +155,7 @@ body {
 .dropdown-content {
     display         : none;
     position        : absolute;
-    background-color: rgba(51, 50, 40, 0.95);
+    background-color: rgba(30, 30, 30, 0.95);
     font-family     : 'Signika';
     font-size: 1.4vw;
     width: 20vw;
@@ -181,6 +170,12 @@ body {
     padding        : 12px 16px;
     text-decoration: none;
     display        : block;
+}
+
+.dropdown-content a:nth-child(2) {
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(.25turn, rgba(255,255,255, 0), rgba(255,255,255, 1), rgba(255,255,255, 0)) 2;
 }
 
 .dropdown-content a:hover {
@@ -556,7 +551,7 @@ a {
 
     #home-menu .std-btn,
     #more-btn {
-        font-size: 2.6vw;
+        font-size: 3vw;
     }
 
     #more-panels h1 {
@@ -584,7 +579,7 @@ a {
     #home-menu .std-btn,
     #more-btn,
     .dropdown-content {
-        font-size: 2.6vw;
+        font-size: 3vw;
     }
 
     #home-menu .std-btn,

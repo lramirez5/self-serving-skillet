@@ -63,7 +63,7 @@ export function HomepageComponent() {
                             <div id="menu-dropdown" className="dropdown-content">
                                 <Link to='/theory'>Cooking Theory</Link>
                                 <Link to='/essentials'>Kitchen Essentials</Link>
-                                <Link to='/techniques'>Technique Tues.</Link>
+                                <Link to='/techniques'>Technique Tuesdays</Link>
                             </div>
                         </div>
                         <button className="std-btn" tabIndex='-1' id="contact-btn"><Link to='/contact'>Contact</Link></button>

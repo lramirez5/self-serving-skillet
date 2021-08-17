@@ -3,7 +3,6 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { AdminPanelComponent } from './components/AdminPanelComponent';
 import { HomepageComponent } from './components/HomepageComponent'
-import { Placeholder } from './components/Placeholder';
 import { VideoListComponent } from './components/VideoListComponent';
 import { PostComponent } from './components/PostComponent';
 import { Error } from './components/Error';

@@ -79,27 +79,14 @@
     font-family: 'Signika';
     font-size  : 1.6vw;
     color      : rgb(214, 214, 214);
+    border-left: 1px solid transparent;
+    border-image: linear-gradient(rgba(255,255,255, 0), rgba(255,255,255, 1), rgba(255,255,255, 0)) 2;
 }
 
 #nav-menu .nav-std-btn:hover {
-    border-left  : 1px solid black;
-    border-right : 1px solid black;
-    border-top   : 0;
-    border-bottom: 0;
-    border-style : inset;
     background   : rgba(212, 212, 212, 0.4);
     cursor       : pointer;
 }
-
-#nav-more-btn:hover,
-#nav-more-btn:active {
-    border-left  : 1px solid black;
-    border-right : 1px solid black;
-    border-top   : 0;
-    border-bottom: 0;
-    border-style : inset;
-}
-
 #nav-menu-more:hover {
     background: rgba(212, 212, 212, 0.4);
 }
@@ -111,7 +98,7 @@
 .nav-dropdown-content {
     display         : none;
     position        : absolute;
-    background-color: rgba(51, 50, 40, 0.95);
+    background-color: rgba(30, 30, 30, 0.95);
     font-family     : 'Signika';
     font-size       : 1.4vw;
     width           : 20vw;
@@ -119,6 +106,12 @@
     overflow        : auto;
     box-shadow      : 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index         : 1;
+}
+
+.nav-dropdown-content a:nth-child(2) {
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(.25turn, rgba(255,255,255, 0), rgba(255,255,255, 1), rgba(255,255,255, 0)) 2;
 }
 
 .nav-dropdown-content a {
@@ -142,7 +135,7 @@
     #nav-menu .nav-std-btn,
     #nav-more-btn,
     .nav-dropdown-content {
-        font-size: 2.6vw;
+        font-size: 3vw;
     }
 
     #nav-menu .nav-std-btn,
