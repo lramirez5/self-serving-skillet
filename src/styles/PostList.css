@@ -166,13 +166,11 @@
     background   : rgba(0, 0, 0, .6);
     color        : white;
     overflow     : hidden;
-    border       : 1px solid rgba(0, 0, 0, 0);
-    border-style: inset;
 }
 
 .post-preview:hover {
     cursor: pointer;
-    border: 1px solid #ffaaaa;
+    background: linear-gradient(45deg, rgba(163, 119, 0, 0.8), rgba(62, 4, 4, 0.7) 50%);
 }
 
 .post-preview:hover h2 {
@@ -207,7 +205,7 @@
 
 .preview-content div h2 {
     margin     : 10px 0 0;
-    max-height     : 80px;
+    max-height     : auto;
     font-size  : 20px;
     line-height: 20px;
     color: lemonchiffon;
@@ -217,7 +215,7 @@
     max-height       : 60px;
     font-size    : 15px;
     line-height  : 20px;
-    margin-top: 20px;
+    margin-top: 2px;
     overflow     : hidden;
     text-overflow: ellipsis;
 }
@@ -288,7 +286,7 @@
         margin-top: 0;
         font-size: 12px;
         line-height: normal;
-        max-height: auto;
+        max-height: 100%;
     }
 
     .post-preview img {

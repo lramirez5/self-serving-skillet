@@ -230,25 +230,28 @@ export function PostListComponent() {
             </div>
             <div id="list-container" style={{ marginBottom: 30 }}>
                 {
-                    posts.map(post => (
+                    posts.map(post => {
+                       const post_desc = post.description.replace(/<br ?\/><br ?\/>/g,'<br/>').replace(/<a.*?>/g, '').replace(/<\/a>/g, '').replace(/<h3>/g, '').replace(/<h4>/g, '').replace(/<\/h3>/g, '').replace(/<\/h4>/g, '')
+                       const post_cutoff = Math.min(post_desc.indexOf(' ', 70), post_desc.indexOf('<br', 70))
+                        return(
                         <Link to={`/view/${post.id}`} key={post.id || post.title} >
                             <div data-key={post.id} className="post-preview" >
                                 <article className="preview-content">
                                     {
                                         post.video
-                                            ? <img src={`https://img.youtube.com/vi/${post.video}/0.jpg`} alt="" />
+                                            ? <img src={`https://img.youtube.com/vi/${post.video}/0.jpg`} alt={post.title + " video thumbnail"} />
                                             : post.images[0]
-                                                ? <img src={post.images[0]} alt="" />
+                                                ? <img src={post.images[0]} alt={post.title + " image"} />
                                                 : <img src="https://yt3.ggpht.com/ytc/AAUvwngy3103R0HdhHNVoLjs9ecQwmBqPMQ7t1nF6LDA=s176-c-k-c0x00ffffff-no-rj" alt="Watch Self Serving Skillet on Youtube" />
                                     }
                                     <div>
                                         <h2>{post.title}</h2>
-                                        <p>{post.description.substring(0, 70).replace(/<br ?\/>/g, '\n').replace(/<a.*?>/g, '').replace(/<\/a>/g, '').replace(/<h3>/g, '').replace(/<h4>/g, '').replace(/<\/h3>/g, '').replace(/<\/h4>/g, '').split('.')[0].split(/[.!? ]\n/g)[0] + '...'}</p>
+                                        <p dangerouslySetInnerHTML={{__html: post_desc.substring(0, post_cutoff) + '...'}}></p>
                                     </div>
                                 </article>
                             </div>
                         </Link>
-                    ))
+                    )})
                 }
             </div>
             <div id='contact-suggestion'>
