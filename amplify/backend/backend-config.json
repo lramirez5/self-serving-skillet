@@ -16,8 +16,8 @@
           "defaultAuthentication": {
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 121,
-              "description": "sss ampify graphql key"
+              "apiKeyExpirationDays": 365,
+              "description": "sss graphql keyyy"
             }
           },
           "additionalAuthenticationProviders": []

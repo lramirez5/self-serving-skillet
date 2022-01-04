@@ -68,7 +68,7 @@ export function AdminPanelComponent() {
             }
             return post;
         }))
-        //console.log(postsFromAPI);
+        //console.dir(postsFromAPI);
         setPosts(postsFromAPI);
     }
 
